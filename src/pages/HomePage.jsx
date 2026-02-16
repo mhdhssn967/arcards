@@ -187,6 +187,7 @@ function HomePage() {
             </div>
           ))}
         </div>
+        <p style={{ fontFamily: '"Luckiest Guy", cursive'}} className="text-green-600 text-3xl text-center">And many more</p>
       </section>
 
       {/* ================= TESTIMONIAL: FLOATING CARD ================= */}
