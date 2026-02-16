@@ -40,7 +40,7 @@ function HomePage() {
             </div>
             
             <h1
-              className="text-7xl md:text-8xl text-emerald-900 leading-[0.9]"
+              className="text-7xl md:text-8xl text-green-600 leading-[0.9]"
               style={{ fontFamily: '"Luckiest Guy", cursive' }}
             >
               Wild <span className="text-orange-500 italic text-6xl md:text-7xl block mt-2">Adventures</span> 
@@ -105,7 +105,7 @@ function HomePage() {
       </section>
 
       {/* ================= STATS BAR ================= */}
-      <section className="bg-emerald-900 py-12">
+      <section className="bg-green-800 py-12">
         <div className="px-6 md:px-20 flex justify-center gap-35 text-center">
           {[
             { label: "Safe Score", val: "100%" },
@@ -122,7 +122,7 @@ function HomePage() {
       {/* ================= FEATURES: BENTO GRID STYLE ================= */}
       <section className="px-6 md:px-20 py-32">
         <div className="text-center mb-20">
-          <h2 className="text-5xl text-emerald-900 mb-4" style={{ fontFamily: '"Luckiest Guy", cursive' }}>
+          <h2 className="text-5xl text-green-600 mb-4" style={{ fontFamily: '"Luckiest Guy", cursive' }}>
             Built for Curious Minds
           </h2>
           <p className="text-slate-500 max-w-xl mx-auto">Modern learning doesn't happen in a book. It happens in the air, on the table, and in their imagination.</p>
@@ -163,7 +163,7 @@ function HomePage() {
       <section className="px-6 md:px-20 py-24 bg-white rounded-[4rem] mx-4 shadow-sm border border-slate-100">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-xl">
-            <h2 className="text-5xl text-emerald-900 mb-4" style={{ fontFamily: '"Luckiest Guy", cursive' }}>
+            <h2 className="text-5xl text-green-600 mb-4" style={{ fontFamily: '"Luckiest Guy", cursive' }}>
               The Collection
             </h2>
             <p className="text-slate-500">Collect all cards</p>
@@ -214,14 +214,14 @@ function HomePage() {
       </section>
 
       {/* ================= FINAL CTA: BUBBLE DESIGN ================= */}
-      <section id="download" className="mx-6 md:mx-20 mb-20 bg-emerald-600 rounded-[3rem] p-12 md:p-24 text-center text-white relative overflow-hidden">
+      <section id="download" className="mx-6 md:mx-20 mb-20 bg-green-600 rounded-[3rem] p-12 md:p-24 text-center text-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
             <div className="absolute top-10 left-10 w-32 h-32 border-8 border-white rounded-full" />
             <div className="absolute bottom-20 right-20 w-64 h-64 border-[16px] border-white rounded-full" />
         </div>
         
         <h2 className="text-5xl md:text-7xl mb-8 relative z-10" style={{ fontFamily: '"Luckiest Guy", cursive' }}>
-          Start Your <span className="text-orange-400">Safari</span> Today
+          Start Your <span style={{ fontFamily: '"Luckiest Guy", cursive' }} className="text-orange-400">Safari</span> Today
         </h2>
         <p className="text-emerald-100 text-xl mb-12 max-w-2xl mx-auto relative z-10">
           The app is free to download. Start exploring now.
