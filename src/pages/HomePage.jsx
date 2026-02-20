@@ -1,267 +1,758 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
-  ScanLine,
-  Volume2,
-  Sparkles,
-  ShieldCheck,
-  Download,
-  Star,
-  PlayCircle,
-  Gamepad2,
-  Heart,
-  Zap
+  ScanLine, Volume2, Sparkles, ShieldCheck, Download,
+  Star, PlayCircle, Gamepad2, Heart, Zap, ArrowRight,
+  TreePine, Menu, X,
+  StoreIcon
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
-function HomePage() {
-  const cards = [1, 2, 3, 4, 5, 6];
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
 
+function AnimalCard({ card, index }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <div className="min-h-screen bg-[#FFFDF5] text-slate-900 font-sans selection:bg-emerald-200">
-      
-      {/* ================= NAVIGATION ================= */}
-      <nav className="flex justify-between items-center px-6 md:px-20 py-6 sticky top-0 bg-[#FFFDF5]/80 backdrop-blur-md z-50">
-        <div className="text-3xl flex align-middle gap-2 font-black text-emerald-600 " style={{ fontFamily: '"Luckiest Guy", cursive' }}>
-            <img className="w-15 invert" src="./OQ72.png" alt="" />
-          OQULIX
-        </div>
-        
-      </nav>
-
-      {/* ================= HERO: THE ENCHANTED FOREST ================= */}
-      <section className="relative px-6 md:px-20 py-20 overflow-hidden">
-        {/* Background Decorative Blobs */}
-        <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-emerald-100 rounded-full blur-3xl opacity-50 -z-10" />
-        <div className="absolute bottom-[10%] right-[-5%] w-80 h-80 bg-orange-100 rounded-full blur-3xl opacity-50 -z-10" />
-
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider">
-              <Sparkles size={16} /> Magical Augmented Reality
-            </div>
-            
-            <h1
-              className="text-7xl md:text-8xl text-green-600 leading-[0.9]"
-              style={{ fontFamily: '"Luckiest Guy", cursive' }}
-            >
-              Wild <span className="text-orange-500 italic text-6xl md:text-7xl block mt-2">Adventures</span> 
-              In Your Living Room
-            </h1>
-
-            <p className="text-xl text-slate-600 leading-relaxed max-w-lg">
-              Transform your floor into a safari. Oqulix uses cutting-edge AR to 
-              bring 3D animals to life with just a simple card scan.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-5">
-              <a
-                href="https://drive.google.com/uc?export=download&id=1e6KIiuRQL8Ia2z2AhJ2xb_iVwCCYq9U4"
-                className="group relative bg-orange-500 text-white px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 shadow-[0_10px_0_rgb(194,103,13)] hover:translate-y-[2px] hover:shadow-[0_8px_0_rgb(194,103,13)] active:translate-y-[10px] active:shadow-none transition-all"
-              >
-                <Download size={22} />
-                Install Free App
-              </a>
-              <button className="flex items-center justify-center gap-3 px-10 py-5 rounded-2xl font-bold text-slate-700 border-2 border-slate-200 hover:bg-white hover:border-emerald-400 transition-all">
-                <PlayCircle size={22} className="text-emerald-500" />
-                See the Magic
-              </button>
-            </div>
-
-            {/* Social Proof Mini */}
-            <div className="flex items-center gap-4 pt-4">
-              {/* <div className="flex -space-x-3">
-                {[1, 2, 3, 4].map(i => (
-                  <div key={i} className="w-10 h-10 rounded-full border-4 border-[#FFFDF5] bg-slate-200 overflow-hidden">
-                    <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="user" />
-                  </div>
-                ))}
-              </div> */}
-              {/* <p className="text-sm font-medium text-slate-500">
-                <span className="text-slate-900 font-bold">10,000+</span> happy little explorers
-              </p> */}
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="absolute -inset-4 bg-gradient-to-tr from-emerald-200 to-orange-200 rounded-[3rem] blur-2xl opacity-30 animate-pulse" />
-            <div className="relative bg-white p-4 rounded-[3rem] shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
-              <img
-                src="./webbg.png"
-                alt="App Interface"
-                className="rounded-[2.2rem] w-full object-cover"
-              />
-              {/* Floating Badge */}
-              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce">
-                <div className="bg-emerald-500 p-2 rounded-lg text-white">
-                  <Zap fill="white" size={20} />
-                </div>
-                <div className="pr-4">
-                  <p className="text-xs text-slate-400 uppercase font-bold">Latency</p>
-                  <p className="text-sm font-black text-slate-800">Ultra Fast AR</p>
-                </div>
-              </div>
-            </div>
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        cursor: "pointer",
+        transform: hovered ? "translateY(-10px) rotate(0deg)" : `rotate(${index % 2 === 0 ? -2 : 2}deg)`,
+        transition: "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+      }}
+    >
+      <div style={{
+        position: "relative", overflow: "hidden", borderRadius: 20,
+        boxShadow: hovered
+          ? "0 24px 48px rgba(0,0,0,0.25), 0 0 0 3px #FF6B35"
+          : "0 8px 24px rgba(0,0,0,0.12)",
+        transition: "box-shadow 0.3s ease",
+      }}>
+        <img
+          src={`/${card}.jpg`}
+          alt={`Animal Card ${card}`}
+          style={{
+            width: "100%", display: "block", objectFit: "cover",
+            transform: hovered ? "scale(1.08)" : "scale(1)",
+            transition: "transform 0.5s ease",
+          }}
+        />
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)",
+          opacity: hovered ? 1 : 0,
+          transition: "opacity 0.3s ease",
+          display: "flex", alignItems: "flex-end", padding: 12,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <ScanLine size={14} color="white" />
+            <span style={{ color: "white", fontWeight: 800, fontSize: 12, letterSpacing: 1 }}>SCAN & PLAY</span>
           </div>
         </div>
-      </section>
-
-      {/* ================= STATS BAR ================= */}
-      <section className="bg-green-800 py-12">
-        <div className="px-6 md:px-20 flex justify-center gap-35 text-center">
-          {[
-            { label: "Safe Score", val: "100%" },
-            { label: "Rating", val: "4.9/5" },
-          ].map((stat, i) => (
-            <div key={i} className="text-white">
-              <div className="text-3xl font-black text-orange-400">{stat.val}</div>
-              <div className="text-emerald-300 text-sm uppercase tracking-widest font-bold">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ================= FEATURES: BENTO GRID STYLE ================= */}
-      <section className="px-6 md:px-20 py-32">
-        <div className="text-center mb-20">
-          <h2 className="text-5xl text-green-600 mb-4" style={{ fontFamily: '"Luckiest Guy", cursive' }}>
-            Built for Curious Minds
-          </h2>
-          <p className="text-slate-500 max-w-xl mx-auto">Modern learning doesn't happen in a book. It happens in the air, on the table, and in their imagination.</p>
-        </div>
-
-        <div className="grid md:grid-cols-12 gap-6">
-          <div className="md:col-span-8 bg-emerald-50 p-10 rounded-[2.5rem] border border-emerald-100 flex flex-col justify-between group overflow-hidden relative">
-            <div className="relative z-10">
-              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-emerald-600 shadow-sm mb-6 group-hover:scale-110 transition-transform">
-                <Sparkles size={32} />
-              </div>
-              <h3 className="text-3xl font-bold text-emerald-900 mb-4">Hyper-Realistic 3D Models</h3>
-              <p className="text-emerald-800/70 text-lg max-w-md">Our animals aren't just pictures. They breathe, roar, and move exactly like they do in the wild.</p>
-            </div>
-            <div className="absolute right-[-10%] bottom-[-10%] opacity-10 group-hover:rotate-12 transition-transform">
-                <Gamepad2 size={300} />
-            </div>
-          </div>
-
-          <div className="md:col-span-4 bg-orange-500 p-10 rounded-[2.5rem] text-white flex flex-col justify-center items-center text-center">
-             <div className="w-20 h-20 bg-orange-400 rounded-full flex items-center justify-center mb-6">
-                <Volume2 size={40} />
-             </div>
-             <h3 className="text-2xl font-bold mb-2">Phonetic Audio</h3>
-             <p className="text-orange-100 text-sm">Every scan triggers clear, professional narration to help with pronunciation.</p>
-          </div>
-
-          <div className="md:col-span-4 bg-slate-900 p-10 rounded-[2.5rem] text-white">
-             <ShieldCheck size={40} className="text-emerald-400 mb-6" />
-             <h3 className="text-2xl font-bold mb-2">Privacy First</h3>
-             <p className="text-slate-400 text-sm">No data tracking. No ads. Just pure learning.</p>
-          </div>
-
-          </div>
-      </section>
-
-      {/* ================= PRODUCT: THE GALLERY ================= */}
-      <section className="px-6 md:px-20 py-24 bg-white rounded-[4rem] mx-4 shadow-sm border border-slate-100">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <div className="max-w-xl">
-            <h2 className="text-5xl text-green-600 mb-4" style={{ fontFamily: '"Luckiest Guy", cursive' }}>
-              The Collection
-            </h2>
-            <p className="text-slate-500">Collect all cards</p>
-          </div>
-         
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
-          {cards.map((card) => (
-            <div key={card} className="group cursor-pointer">
-              <div className="relative overflow-hidden rounded-2xl  bg-slate-100 mb-4">
-                <img
-                  src={`/${card}.jpg`}
-                  alt={`Animal Card ${card}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                    {/* <span className="text-white font-bold text-sm">Scan to Play</span> */}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <p style={{ fontFamily: '"Luckiest Guy", cursive'}} className="text-green-600 text-3xl text-center">And many more</p>
-      </section>
-
-      {/* ================= TESTIMONIAL: FLOATING CARD ================= */}
-      <section className="px-6 md:px-20 py-32 flex justify-center">
-        <div className="relative w-full max-w-4xl">
-          <div className="absolute -top-10 -left-10 text-emerald-100">
-            <Heart size={160} fill="currentColor" />
-          </div>
-          <div className="relative bg-white border-2 border-emerald-50 p-10 md:p-20 rounded-[4rem] shadow-2xl shadow-emerald-100/50 text-center">
-            <div className="flex justify-center gap-1 mb-8">
-              {[1, 2, 3, 4, 5].map((s) => (
-                <Star key={s} size={28} fill="#fb923c" className="text-orange-400" />
-              ))}
-            </div>
-            <blockquote className="text-2xl md:text-3xl font-medium text-emerald-950 italic leading-snug">
-              “Oqulix has completely changed how we spend our evenings. It’s the only 'screen time' I feel good about because my daughter is moving, speaking, and learning.”
-            </blockquote>
-            <div className="mt-10">
-              <p className="font-black text-emerald-600 text-xl">Sarah Jenkins</p>
-              <p className="text-slate-400 font-bold uppercase text-xs tracking-widest mt-1">Kindergarten Teacher & Mom</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= FINAL CTA: BUBBLE DESIGN ================= */}
-      <section id="download" className="mx-6 md:mx-20 mb-20 bg-green-600 rounded-[3rem] p-12 md:p-24 text-center text-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-            <div className="absolute top-10 left-10 w-32 h-32 border-8 border-white rounded-full" />
-            <div className="absolute bottom-20 right-20 w-64 h-64 border-[16px] border-white rounded-full" />
-        </div>
-        
-        <h2 className="text-5xl md:text-7xl mb-8 relative z-10" style={{ fontFamily: '"Luckiest Guy", cursive' }}>
-          Start Your <span style={{ fontFamily: '"Luckiest Guy", cursive' }} className="text-orange-400">Safari</span> Today
-        </h2>
-        <p className="text-emerald-100 text-xl mb-12 max-w-2xl mx-auto relative z-10">
-          The app is free to download. Start exploring now.
-        </p>
-
-        <div className="flex flex-col sm:flex-row justify-center gap-6 relative z-10">
-          <a
-            href="https://drive.google.com/uc?export=download&id=1e6KIiuRQL8Ia2z2AhJ2xb_iVwCCYq9U4"
-            className="bg-white text-emerald-600 px-12 py-5 rounded-2xl text-xl font-black shadow-xl hover:scale-105 transition-transform flex items-center justify-center gap-3"
-          >
-            <Download />
-            App Store
-          </a>
-          <a
-            href="#"
-            className="bg-emerald-900/40 backdrop-blur-md border-2 border-emerald-400/30 text-white px-12 py-5 rounded-2xl text-xl font-black hover:bg-emerald-800/60 transition-all flex items-center justify-center gap-3"
-          >
-            Get the Cards
-          </a>
-        </div>
-      </section>
-
-      {/* ================= FOOTER ================= */}
-      <footer className="px-6 md:px-20 py-12 border-t border-slate-100">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="text-2xl font-black text-emerald-600" style={{ fontFamily: '"Luckiest Guy", cursive' }}>
-            OQULIX<span className="text-orange-500">.</span>
-          </div>
-          <div className="flex gap-8 text-slate-400 font-bold text-sm uppercase">
-            <a href="#" className="hover:text-emerald-600 transition">Privacy</a>
-            <a href="#" className="hover:text-emerald-600 transition">Support</a>
-            <a href="#" className="hover:text-emerald-600 transition">Instagram</a>
-          </div>
-          <div className="text-slate-400 text-sm">
-            © 2026 Oqulix Labs. <span className="text-orange-400">Stay Wild.</span>
-          </div>
-        </div>
-      </footer>
+      </div>
     </div>
   );
 }
 
-export default HomePage;
+function CountUp({ target, suffix = "" }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        let start = 0;
+        const step = target / 60;
+        const timer = setInterval(() => {
+          start += step;
+          if (start >= target) { setCount(target); clearInterval(timer); }
+          else setCount(Math.floor(start));
+        }, 16);
+      }
+    });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target]);
+  return <span ref={ref}>{count}{suffix}</span>;
+}
+
+export default function HomePage() {
+  const cards = [1, 2, 3, 4, 5, 6];
+  const isMobile = useIsMobile();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+          --cream: #FEFAE8;
+          --green-dark: #1A3A2A;
+          --green-mid: #2D6A4F;
+          --green-bright: #52B788;
+          --orange: #FF6B35;
+          --yellow: #FFD93D;
+          --teal: #00C9A7;
+          --purple: #845EC2;
+          --font-display: 'Boogaloo', cursive;
+          --font-body: 'Nunito', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { background: var(--cream); font-family: var(--font-body); overflow-x: hidden; }
+        img { max-width: 100%; height: auto; }
+
+        .display { font-family: var(--font-display); }
+
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .marquee-track { display: flex; animation: marquee 22s linear infinite; width: max-content; }
+
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.25s; }
+        .delay-3 { animation-delay: 0.4s; }
+        .delay-4 { animation-delay: 0.55s; }
+
+        @keyframes spinSlow { to { transform: rotate(360deg); } }
+        .spin-slow { animation: spinSlow 20s linear infinite; }
+
+        @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .bob { animation: bob 3s ease-in-out infinite; }
+
+        @keyframes scrollHint { 0%,100% { transform: translateY(0); opacity:1; } 50% { transform: translateY(10px); opacity:0.4; } }
+        .scroll-hint { animation: scrollHint 2s ease infinite; }
+
+        .badge {
+          display: inline-flex; align-items: center; gap: 6px;
+          background: var(--orange); color: white;
+          padding: 6px 16px; border-radius: 999px;
+          font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+          font-family: var(--font-body);
+        }
+
+        .btn-primary {
+          background: var(--orange); color: white;
+          padding: 16px 28px; border-radius: 16px;
+          font-weight: 900; font-size: 16px; border: none; cursor: pointer;
+          box-shadow: 0 7px 0 #c43e0f;
+          transition: all 0.15s;
+          display: inline-flex; align-items: center; gap: 10px;
+          text-decoration: none; font-family: var(--font-body);
+          white-space: nowrap;
+        }
+        .btn-primary:hover { transform: translateY(3px); box-shadow: 0 4px 0 #c43e0f; }
+        .btn-primary:active { transform: translateY(7px); box-shadow: none; }
+
+        .btn-secondary {
+          background: transparent; color: var(--green-dark);
+          padding: 16px 28px; border-radius: 16px;
+          font-weight: 800; font-size: 16px;
+          border: 3px solid var(--green-mid); cursor: pointer;
+          transition: all 0.2s;
+          display: inline-flex; align-items: center; gap: 10px;
+          text-decoration: none; font-family: var(--font-body);
+          white-space: nowrap;
+        }
+        .btn-secondary:hover { background: var(--green-dark); color: white; border-color: var(--green-dark); }
+
+        .feat-card {
+          border-radius: 26px; padding: 32px;
+          position: relative; overflow: hidden;
+          transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .feat-card:hover { transform: translateY(-6px); }
+
+        .quote-card {
+          background: white; border-radius: 32px; padding: 48px;
+          position: relative;
+          box-shadow: 0 40px 80px rgba(0,0,0,0.08);
+          border: 3px solid #f0f0f0;
+        }
+
+        .nav-link {
+          font-weight: 800; font-size: 15px; color: var(--green-dark);
+          text-decoration: none; position: relative; letter-spacing: 0.03em;
+          transition: color 0.2s;
+        }
+        .nav-link::after {
+          content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+          height: 3px; background: var(--orange); border-radius: 2px;
+          transform: scaleX(0); transition: transform 0.2s;
+        }
+        .nav-link:hover { color: var(--orange); }
+        .nav-link:hover::after { transform: scaleX(1); }
+
+        /* ---- LAYOUT GRIDS ---- */
+        .hero-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: center;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+          max-width: 900px;
+          margin: 0 auto;
+        }
+        .feat-grid {
+          display: grid;
+          grid-template-columns: repeat(12, 1fr);
+          gap: 18px;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .feat-col-7 { grid-column: span 7; }
+        .feat-col-5 { grid-column: span 5; }
+        .feat-col-4 { grid-column: span 4; }
+        .steps-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+          max-width: 960px;
+          margin: 0 auto;
+        }
+        .cards-grid {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          gap: 14px;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .mini-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+        .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .collection-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 36px; gap: 16px; max-width: 1200px; margin: 0 auto 36px; }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; max-width: 1200px; margin: 0 auto; }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 1024px) {
+          .feat-grid { grid-template-columns: 1fr 1fr; }
+          .feat-col-7 { grid-column: span 2; }
+          .feat-col-5 { grid-column: span 2; }
+          .feat-col-4 { grid-column: span 1; }
+          .cards-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 767px) {
+          /* Hero: single column */
+          .hero-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
+          .hero-mockup { display: none !important; }
+
+          /* Stats: single column */
+          .stats-grid { grid-template-columns: 1fr !important; }
+
+          /* Features: single column */
+          .feat-grid { grid-template-columns: 1fr !important; }
+          .feat-col-7, .feat-col-5, .feat-col-4 { grid-column: span 1 !important; }
+
+          /* Steps: single column */
+          .steps-grid { grid-template-columns: 1fr !important; }
+
+          /* Cards: 2 columns */
+          .cards-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+
+          /* Mini grid: 2 columns */
+          .mini-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+
+          /* Buttons: full width stacked */
+          .hero-btns { flex-direction: column !important; }
+          .hero-btns a, .hero-btns button { width: 100% !important; justify-content: center !important; }
+          .cta-btns { flex-direction: column !important; align-items: stretch !important; }
+          .cta-btns a { justify-content: center !important; }
+
+          /* Collection header: stack */
+          .collection-header { flex-direction: column !important; align-items: flex-start !important; }
+
+          /* Footer: center stack */
+          .footer-inner { flex-direction: column !important; text-align: center !important; justify-content: center !important; }
+
+          /* Quote card */
+          .quote-card { padding: 28px 20px !important; border-radius: 24px !important; }
+
+          /* Desktop nav */
+          .desktop-nav { display: none !important; }
+          .mobile-hamburger { display: flex !important; }
+        }
+
+        .desktop-nav { display: flex; gap: 32px; align-items: center; }
+        .mobile-hamburger { display: none; align-items: center; justify-content: center; }
+      `}</style>
+
+      <div style={{ background: "var(--cream)", minHeight: "100vh" }}>
+
+        {/* Mobile Full-Screen Menu */}
+        {menuOpen && (
+          <div style={{
+            position: "fixed", inset: 0, zIndex: 500,
+            background: "var(--green-dark)",
+            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+            gap: 40,
+          }}>
+            <button onClick={() => setMenuOpen(false)} style={{
+              position: "absolute", top: 20, right: 20,
+              background: "rgba(255,255,255,0.1)", border: "none", borderRadius: 12,
+              width: 48, height: 48, cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <X size={24} color="white" />
+            </button>
+            {[
+              { label: "Features", href: "#features" },
+              { label: "Cards", href: "#collection" },
+              { label: "How It Works", href: "#howto" },
+            ].map(link => (
+              <a key={link.label} href={link.href} onClick={() => setMenuOpen(false)} style={{
+                fontFamily: "var(--font-display)", fontSize: 42, color: "white",
+                textDecoration: "none", transition: "color 0.2s",
+              }}
+                onMouseEnter={e => e.currentTarget.style.color = "var(--orange)"}
+                onMouseLeave={e => e.currentTarget.style.color = "white"}
+              >{link.label}</a>
+            ))}
+            <a href="https://drive.google.com/uc?export=download&id=1e6KIiuRQL8Ia2z2AhJ2xb_iVwCCYq9U4"
+              onClick={() => setMenuOpen(false)}
+              className="btn-primary" style={{ marginTop: 8 }}>
+              <Download size={18} /> Download Free
+            </a>
+          </div>
+        )}
+
+        {/* ===== NAV ===== */}
+        <nav style={{
+          position: "sticky", top: 0, zIndex: 100,
+          background: "rgba(254,250,232,0.92)", backdropFilter: "blur(16px)",
+          borderBottom: "2px solid rgba(0,0,0,0.06)",
+          padding: "0 5%", display: "flex", alignItems: "center",
+          justifyContent: "space-between", height: 68,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 38, height: 38, borderRadius: 11, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <img src="./OQ72.png" alt="" style={{filter:'invert(1)'}}/>
+            </div>
+            <span className="display" style={{ fontSize: 24, color: "var(--green-dark)", letterSpacing: 1 }}>
+              OQU<span style={{ color: "var(--orange)" }}>LIX</span>
+            </span>
+          </div>
+
+          <div className="desktop-nav">
+            <a href="#features" className="nav-link">Features</a>
+            <a href="#collection" className="nav-link">Cards</a>
+            <a href="#howto" className="nav-link">How It Works</a>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <a href="https://drive.google.com/uc?export=download&id=1e6KIiuRQL8Ia2z2AhJ2xb_iVwCCYq9U4"
+              className="btn-primary"
+              style={{ padding: "9px 18px", fontSize: 14, borderRadius: 12, boxShadow: "0 5px 0 #c43e0f" }}>
+              <Download size={14} /> Download
+            </a>
+            <button className="mobile-hamburger" onClick={() => setMenuOpen(true)} style={{
+              background: "rgba(0,0,0,0.06)", border: "none", borderRadius: 10,
+              width: 40, height: 40, cursor: "pointer",
+            }}>
+              <Menu size={20} color="var(--green-dark)" />
+            </button>
+          </div>
+        </nav>
+
+        {/* ===== HERO ===== */}
+        <section style={{ padding: isMobile ? "52px 5% 40px" : "80px 5% 56px", position: "relative", overflow: "hidden" }}>
+          <div style={{
+            position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0,
+            background: `radial-gradient(ellipse 80% 60% at 20% 40%, rgba(0,201,167,0.10) 0%, transparent 60%),
+                         radial-gradient(ellipse 60% 50% at 80% 20%, rgba(255,107,53,0.08) 0%, transparent 60%)`,
+          }} />
+          {!isMobile && (
+            <div className="spin-slow" style={{
+              position: "absolute", top: -120, right: -120, width: 500, height: 500,
+              borderRadius: "50%", border: "40px solid rgba(82,183,136,0.07)", pointerEvents: "none",
+            }} />
+          )}
+
+          <div className="hero-grid" style={{ position: "relative", zIndex: 1 }}>
+            {/* Left content */}
+            <div>
+              <div className="badge fade-up" style={{ marginBottom: 20 }}>
+                <Sparkles size={13} /> Magical AR Experience
+              </div>
+
+              <h1
+                className="display fade-up delay-1"
+                style={{ fontSize: isMobile ? 52 : 76, lineHeight: 1.0, color: "var(--green-dark)", marginBottom: 20 }}
+              >
+                Wild<br />
+                <span style={{ color: "var(--orange)" }}>Adventures</span><br />
+                <span style={{ fontSize: isMobile ? "0.78em" : "0.72em", color: "var(--green-mid)" }}>In Your Living Room</span>
+              </h1>
+
+              <p className="fade-up delay-2" style={{ fontSize: isMobile ? 15 : 18, lineHeight: 1.7, color: "#555", maxWidth: 460, marginBottom: 32 }}>
+                Transform your floor into a safari. Oqulix uses cutting-edge AR to bring 3D animals to life with just a simple card scan.
+              </p>
+
+              <div className="hero-btns fade-up delay-3" style={{ marginBottom: 32 }}>
+                <a href="https://drive.google.com/uc?export=download&id=1e6KIiuRQL8Ia2z2AhJ2xb_iVwCCYq9U4" className="btn-primary">
+                  <Download size={18} /> Install Free App
+                </a>
+                <button className="btn-secondary">
+                 <Link to="/purchase" className="flex gap-1.5" style={{alignItems:'center'}}> <StoreIcon size={18} /> Buy Cards</Link>
+                </button>
+              </div>
+
+              <div className="fade-up delay-4" style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+                <div style={{ display: "flex", gap: 3 }}>
+                  {[1,2,3,4,5].map(s => <Star key={s} size={17} fill="#FFD93D" color="#FFD93D" />)}
+                </div>
+                <span style={{ fontWeight: 700, color: "#333", fontSize: 14 }}>4.9 / 5 Rating</span>
+                <span style={{ color: "#ccc" }}>|</span>
+                <span style={{ fontWeight: 700, color: "#333", fontSize: 14 }}>100% Safe for Kids</span>
+              </div>
+            </div>
+
+            {/* Right — hidden mobile */}
+            <div className="hero-mockup" style={{ position: "relative" }}>
+              <div style={{
+                position: "absolute", top: "2%", right: "-4%", zIndex: 10,
+                fontFamily: "var(--font-display)", transform: "rotate(8deg)",
+                background: "var(--yellow)", color: "var(--green-dark)",
+                padding: "8px 18px", borderRadius: 999, fontSize: 14, fontWeight: 700,
+                boxShadow: "3px 3px 0 rgba(0,0,0,0.15)", whiteSpace: "nowrap",
+              }}>🦁 Interactive Animals!</div>
+              <div style={{
+                position: "absolute", bottom: "14%", left: "-5%", zIndex: 10,
+                fontFamily: "var(--font-display)", transform: "rotate(-6deg)",
+                background: "var(--teal)", color: "white",
+                padding: "8px 18px", borderRadius: 999, fontSize: 16, fontWeight: 200,
+                boxShadow: "3px 3px 0 rgba(0,0,0,0.15)", whiteSpace: "nowrap",
+              }}>Free to Download ✨</div>
+              <div style={{ position: "absolute", inset: -20, background: "radial-gradient(ellipse, rgba(82,183,136,0.22) 0%, transparent 70%)", borderRadius: "50%", filter: "blur(24px)" }} />
+              <div className="bob" style={{ background: "white", borderRadius: 44, padding: 14, boxShadow: "0 40px 80px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.04)", position: "relative" }}>
+                <img src="./webbg.png" alt="App Interface" style={{ borderRadius: 32, width: "100%", display: "block" }} />
+                <div style={{
+                  position: "absolute", bottom: -22, right: 20,
+                  background: "white", borderRadius: 18, padding: "12px 18px",
+                  boxShadow: "0 12px 32px rgba(0,0,0,0.14)",
+                  display: "flex", alignItems: "center", gap: 10,
+                }}>
+                  <div style={{ background: "var(--orange)", padding: 8, borderRadius: 10 }}>
+                    <Zap size={16} color="white" fill="white" />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 10, fontWeight: 800, color: "#999", textTransform: "uppercase", letterSpacing: 1 }}>Latency</div>
+                    <div style={{ fontSize: 13, fontWeight: 900, color: "#222" }}>Ultra Fast AR</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        {/* ===== MARQUEE ===== */}
+        <div style={{ background: "var(--green-dark)", padding: "16px 0", overflow: "hidden", borderTop: "4px solid var(--orange)", borderBottom: "4px solid var(--orange)" }}>
+          <div className="marquee-track">
+            {[...Array(2)].map((_, rep) =>
+             ["🐯 Tiger", "🐘 Elephant", "🐧 Penguin", "🐮 Cow", "🦊 Fox", "🐏 Sheep", "🐺 Wolf", "🐢 Tortoise", "🦏 Rhino", "🐶 Dog","🐈‍⬛ Cat","🦌 Deer"].map((item, i) => (
+                <span key={`${rep}-${i}`} style={{
+                  color: i % 3 === 0 ? "var(--orange)" : i % 3 === 1 ? "var(--yellow)" : "var(--teal)",
+                  fontSize: 17, marginRight: 36, whiteSpace: "nowrap", fontFamily: "var(--font-display)",
+                }}>
+                  {item} <span >✨</span>
+                </span>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* ===== STATS ===== */}
+        <section style={{ padding: isMobile ? "52px 5%" : "80px 5%", background: "white" }}>
+          <div className="stats-grid">
+            {[
+              { val: 100, suffix: "%", label: "Child Safe", color: "var(--teal)", desc: "No ads, no tracking" },
+              { val: 4.9, suffix: "/5", label: "App Rating", color: "var(--orange)", desc: "Loved by parents & kids" },
+              { val: 30, suffix: "+", label: "AR Cards", color: "var(--purple)", desc: " Cards with inetractive animals" },
+            ].map((stat, i) => (
+              <div key={i} style={{
+                background: "var(--cream)", borderRadius: 22, padding: isMobile ? "24px 16px" : "40px 24px",
+                textAlign: "center", border: `3px solid ${stat.color}22`,
+                transition: "transform 0.3s",
+              }}
+                onMouseEnter={e => e.currentTarget.style.transform = "translateY(-6px)"}
+                onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
+              >
+                <div className="display" style={{ color: stat.color, marginBottom: 8, fontSize: isMobile ? 44 : 60, lineHeight: 1 }}>
+                  <CountUp target={stat.val} suffix={stat.suffix} />
+                </div>
+                <div style={{ fontWeight: 900, fontSize: isMobile ? 15 : 19, color: "var(--green-dark)", marginBottom: 6 }}>{stat.label}</div>
+                <div style={{ fontSize: 13, color: "#888", fontWeight: 600 }}>{stat.desc}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ===== FEATURES ===== */}
+        <section id="features" style={{ padding: isMobile ? "60px 5%" : "100px 5%" }}>
+          <div style={{ textAlign: "center", marginBottom: isMobile ? 36 : 60 }}>
+            <div className="badge" style={{ background: "var(--green-mid)", marginBottom: 16 }}>✦ Features</div>
+            <h2 className="display" style={{ fontSize: isMobile ? 36 : 54, color: "var(--green-dark)", lineHeight: 1.1, marginBottom: 14 }}>
+              Built for Curious Minds
+            </h2>
+            <p style={{ color: "#666", fontSize: isMobile ? 15 : 17, maxWidth: 500, margin: "0 auto", lineHeight: 1.7 }}>
+              Modern learning doesn't happen in a book — it happens in the air, on the table, and in their imagination.
+            </p>
+          </div>
+
+          <div className="feat-grid">
+            <div className="feat-card feat-col-7" style={{ background: "linear-gradient(135deg, #E8F8F0, #D4F0E4)" }}>
+              <div style={{ width: 56, height: 56, background: "white", borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.08)", marginBottom: 18 }}>
+                <Sparkles size={26} color="var(--green-mid)" />
+              </div>
+              <h3 className="display" style={{ fontSize: isMobile ? 26 : 32, color: "var(--green-dark)", marginBottom: 12 }}>Hyper-Realistic 3D Models</h3>
+              <p style={{ color: "#4a7c5f", fontSize: isMobile ? 14 : 16, lineHeight: 1.7, maxWidth: 360 }}>
+                Our animals breathe, roar, and move exactly like they do in the wild. 
+              </p>
+              <div style={{ position: "absolute", right: -20, bottom: -20, opacity: 0.06 }}>
+                <Gamepad2 size={isMobile ? 120 : 180} color="var(--green-dark)" />
+              </div>
+            </div>
+
+            <div className="feat-card feat-col-5" style={{ background: "var(--orange)" }}>
+              <div style={{ width: 68, height: 68, background: "rgba(255,255,255,0.2)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
+                <Volume2 size={32} color="white" />
+              </div>
+              <h3 className="display" style={{ fontSize: 28, color: "white", marginBottom: 10 }}>Phonetic Audio</h3>
+              <p style={{ color: "rgba(255,255,255,0.85)", fontSize: 14, lineHeight: 1.7 }}>Every scan triggers clear, professional narration</p>
+              
+            </div>
+
+            <div className="feat-card feat-col-4" style={{ background: "var(--green-dark)" }}>
+              <ShieldCheck size={36} color="var(--teal)" style={{ marginBottom: 16 }} />
+              <h3 className="display" style={{ fontSize: 24, color: "white", marginBottom: 10 }}>Privacy First</h3>
+              <p style={{ color: "#aaa", fontSize: 14, lineHeight: 1.7 }}>No data tracking. No ads. No subscriptions. Just pure learning.</p>
+              
+            </div>
+
+            <div className="feat-card feat-col-4" style={{ background: "var(--yellow)" }}>
+              <ScanLine size={36} color="var(--green-dark)" style={{ marginBottom: 16 }} />
+              <h3 className="display" style={{ fontSize: 24, color: "var(--green-dark)", marginBottom: 10 }}>Instant Scan</h3>
+              <p style={{ color: "#555", fontSize: 14, lineHeight: 1.7 }}>Point. Scan. Marvel. AR launches in under a second — zero setup.</p>
+            </div>
+
+            <div className="feat-card feat-col-4" style={{ background: "linear-gradient(135deg, #e8e0ff, #d4c8ff)" }}>
+              <Zap size={36} color="var(--purple)" style={{ marginBottom: 16 }} />
+              <h3 className="display" style={{ fontSize: 24, color: "var(--green-dark)", marginBottom: 10 }}>Works Offline</h3>
+              <p style={{ color: "#666", fontSize: 14, lineHeight: 1.7 }}>Adventures continue even without a signal — perfect for travel.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== HOW IT WORKS ===== */}
+        <section id="howto" style={{ padding: isMobile ? "60px 5%" : "100px 5%", background: "var(--green-dark)", position: "relative", overflow: "hidden" }}>
+          <div style={{ textAlign: "center", marginBottom: isMobile ? 36 : 60 }}>
+            <div className="badge" style={{ background: "var(--orange)", marginBottom: 16 }}>✦ How It Works</div>
+            <h2 className="display" style={{ fontSize: isMobile ? 36 : 54, color: "white", lineHeight: 1.1 }}>3 Steps to Wonder</h2>
+          </div>
+
+          <div className="steps-grid">
+            {[
+              { step: "01", emoji: "📦", title: "Get the Cards", desc: "Order your physical Oqulix card pack — beautifully illustrated & built to last." },
+              { step: "02", emoji: "📱", title: "Open the App", desc: "Launch Oqulix on any modern Android device. No account needed." },
+              { step: "03", emoji: "✨", title: "Watch Magic Happen", desc: "Scan any card and watch your animal leap into the real world in full 3D!" },
+            ].map((item, i) => (
+              <div key={i} style={{
+                textAlign: "center", padding: isMobile ? "28px 20px" : "40px 28px",
+                background: "rgba(255,255,255,0.05)", borderRadius: 26,
+                border: "1px solid rgba(255,255,255,0.08)",
+                transition: "background 0.3s, transform 0.3s",
+              }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.transform = "translateY(-6px)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.transform = "translateY(0)"; }}
+              >
+                <div style={{ fontSize: 44, marginBottom: 14 }}>{item.emoji}</div>
+                <div className="display" style={{ fontSize: 15, color: "var(--orange)", marginBottom: 10, letterSpacing: 2 }}>STEP {item.step}</div>
+                <h3 className="display" style={{ fontSize: 26, color: "white", marginBottom: 12 }}>{item.title}</h3>
+                <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.7 }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ===== COLLECTION ===== */}
+        <section id="collection" style={{ padding: isMobile ? "60px 5%" : "100px 5%", background: "white" }}>
+          <div className="collection-header">
+            <div>
+              <div className="badge" style={{ background: "var(--teal)", marginBottom: 14 }}>✦ The Collection</div>
+              <h2 className="display" style={{ fontSize: isMobile ? 36 : 52, color: "var(--green-dark)", lineHeight: 1.1 }}>Collect Them All</h2>
+            </div>
+            <p style={{ color: "#888", fontSize: 14, maxWidth: 240, fontWeight: 600, lineHeight: 1.6 }}>
+              Every card unlocks a unique AR experience. 
+            </p>
+          </div>
+
+          <div className="cards-grid">
+            {cards.map((card, index) => (
+              <AnimalCard key={card} card={card} index={index} />
+            ))}
+          </div>
+
+          <div style={{ textAlign: "center", marginTop: 36 }}>
+            <p className="display" style={{ fontSize: 28, color: "var(--green-mid)" }}>And many more 🎉</p>
+           
+          </div>
+        </section>
+
+        {/* ===== TESTIMONIAL ===== */}
+        <section style={{ padding: isMobile ? "60px 5%" : "100px 5%", position: "relative" }}>
+          {!isMobile && (
+            <div style={{ position: "absolute", top: 40, left: "5%", color: "rgba(82,183,136,0.10)", pointerEvents: "none" }}>
+              <Heart size={160} fill="currentColor" />
+            </div>
+          )}
+          <div style={{ maxWidth: 780, margin: "0 auto", position: "relative" }}>
+            <div className="quote-card">
+              <div style={{ display: "flex", justifyContent: "center", gap: 4, marginBottom: 20 }}>
+                {[1,2,3,4,5].map(s => <Star key={s} size={22} fill="#FFD93D" color="#FFD93D" />)}
+              </div>
+              <div className="display" style={{ fontSize: isMobile ? 72 : 100, color: "var(--green-bright)", opacity: 0.18, lineHeight: 0.5, marginBottom: 16 }}>"</div>
+              <blockquote style={{ fontSize: isMobile ? 16 : 21, fontStyle: "italic", color: "var(--green-dark)", lineHeight: 1.7, textAlign: "center", fontWeight: 700, marginBottom: 28 }}>
+                Oqulix has completely changed how we spend our evenings. It's the only 'screen time' I feel good about because my daughter is moving, speaking, and learning.
+              </blockquote>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg, var(--green-bright), var(--teal))", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px", fontSize: 24 }}>👩‍🏫</div>
+                <div style={{ fontWeight: 900, fontSize: 17, color: "var(--green-dark)" }}>Sarah Jenkins</div>
+                <div style={{ color: "#999", fontWeight: 700, fontSize: 11, textTransform: "uppercase", letterSpacing: 2, marginTop: 4 }}>Kindergarten Teacher & Mom</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== MINI FEATURES ===== */}
+        <section style={{ padding: isMobile ? "0 5% 60px" : "0 5% 100px" }}>
+          <div className="mini-grid">
+            {[
+              { emoji: "🤳", title: "Interactive", desc: "Touch & Interactable" },
+              { emoji: "🔋", title: "Battery Friendly", desc: "Optimized AR engine" },
+              { emoji: "📡", title: "Offline Mode", desc: "Works without internet" },
+              { emoji: "🔠", title: "Learn mode", desc: "Learn spellings" },
+            ].map((f, i) => (
+              <div key={i} style={{
+                background: "var(--cream)", borderRadius: 20, padding: isMobile ? "22px 14px" : "30px 22px",
+                textAlign: "center", border: "2px solid rgba(0,0,0,0.05)",
+                transition: "transform 0.3s ease",
+              }}
+                onMouseEnter={e => e.currentTarget.style.transform = "translateY(-6px)"}
+                onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
+              >
+                <div style={{ fontSize: isMobile ? 32 : 38, marginBottom: 10 }}>{f.emoji}</div>
+                <div style={{ fontWeight: 900, fontSize: isMobile ? 14 : 16, color: "var(--green-dark)", marginBottom: 6 }}>{f.title}</div>
+                <div style={{ color: "#888", fontSize: 12, fontWeight: 600 }}>{f.desc}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ===== CTA ===== */}
+        <section style={{ padding: isMobile ? "0 4% 60px" : "0 5% 80px" }}>
+          <div style={{
+            background: "linear-gradient(135deg, #1A3A2A 0%, #2D6A4F 60%, #1a4a35 100%)",
+            borderRadius: isMobile ? 28 : 44,
+            padding: isMobile ? "48px 24px" : "80px 60px",
+            textAlign: "center", position: "relative", overflow: "hidden",
+            maxWidth: 1200, margin: "0 auto",
+          }}>
+            <div style={{ position: "absolute", top: -30, left: -30, width: 120, height: 120, borderRadius: "50%", border: "12px solid rgba(255,255,255,0.07)", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", bottom: -50, right: -50, width: 200, height: 200, borderRadius: "50%", border: "20px solid rgba(255,255,255,0.04)", pointerEvents: "none" }} />
+
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <div className="badge" style={{ background: "var(--orange)", marginBottom: 20 }}>🦁 Free to Download</div>
+              <h2 className="display" style={{ fontSize: isMobile ? 42 : 64, color: "white", lineHeight: 1.05, marginBottom: 16 }}>
+                Start Your <span style={{ color: "var(--orange)" }}>Safari</span> Today
+              </h2>
+              <p style={{ color: "rgba(255,255,255,0.7)", fontSize: isMobile ? 15 : 18, marginBottom: 36, maxWidth: 440, margin: "0 auto 36px", lineHeight: 1.6 }}>
+                The app is completely free. Order your cards and unlock a world of wonder.
+              </p>
+              <div className="cta-btns">
+                <a href="https://drive.google.com/uc?export=download&id=1e6KIiuRQL8Ia2z2AhJ2xb_iVwCCYq9U4" style={{
+                  background: "white", color: "var(--green-dark)",
+                  padding: isMobile ? "16px 28px" : "20px 44px", borderRadius: 20,
+                  fontWeight: 900, fontSize: isMobile ? 16 : 19, textDecoration: "none",
+                  display: "inline-flex", alignItems: "center", gap: 10,
+                  boxShadow: "0 12px 32px rgba(0,0,0,0.18)", transition: "transform 0.2s",
+                  fontFamily: "var(--font-body)",
+                }}
+                  onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
+                  onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+                >
+                  <Download size={19} /> Download App
+                </a>
+                <a href="#" style={{
+                  background: "rgba(255,255,255,0.1)", color: "white",
+                  padding: isMobile ? "16px 28px" : "20px 44px", borderRadius: 20,
+                  fontWeight: 900, fontSize: isMobile ? 16 : 19, textDecoration: "none",
+                  display: "inline-flex", alignItems: "center", gap: 10,
+                  border: "2px solid rgba(255,255,255,0.2)", transition: "background 0.2s",
+                  fontFamily: "var(--font-body)",
+                }}
+                  onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.18)"}
+                  onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.1)"}
+                >
+                  <ArrowRight size={19} /> Get the Cards
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== FOOTER ===== */}
+        <footer style={{ padding: isMobile ? "36px 5%" : "44px 5%", borderTop: "2px solid rgba(0,0,0,0.06)" }}>
+          <div className="footer-inner">
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <img src="./OQ72.png" alt="" style={{filter:'invert(1)'}}/>
+              </div>
+              <span className="display" style={{ fontSize: 22, color: "var(--green-dark)" }}>
+                OQU<span style={{ color: "var(--orange)" }}>LIX</span><span style={{ color: "var(--orange)" }}>.</span>
+              </span>
+            </div>
+            <div style={{ display: "flex", gap: isMobile ? 20 : 28, flexWrap: "wrap", justifyContent: "center" }}>
+              {["Privacy", "Support", "Instagram", "Terms"].map(link => (
+                <a key={link} href="#" style={{ color: "#888", fontWeight: 700, fontSize: 13, textDecoration: "none", transition: "color 0.2s" }}
+                  onMouseEnter={e => e.currentTarget.style.color = "var(--orange)"}
+                  onMouseLeave={e => e.currentTarget.style.color = "#888"}
+                >{link}</a>
+              ))}
+            </div>
+            <div style={{ color: "#aaa", fontSize: 13, fontWeight: 600 }}>
+              © 2026 Oqulix Pvt Ltd — <span style={{ color: "var(--orange)" }}>Stay Wild 🌿</span>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+    </>
+  );
+}
