@@ -4,6 +4,7 @@ import {
   Sparkles, Package, Smartphone, CheckCircle2, ChevronDown,
   Truck, RefreshCcw, Lock, ArrowRight, Zap, ScanLine
 } from "lucide-react";
+import RazorpayButton from "../components/RazorpayButton";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -251,12 +252,15 @@ export default function PurchasePage() {
           justifyContent: "space-between", height: 68,
         }}>
           <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-            <div style={{ width: 38, height: 38, background: "var(--green-mid)", borderRadius: 11, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <TreePine size={19} color="white" />
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 38, height: 38, borderRadius: 11, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <img src="./OQ72.png" alt="" style={{filter:'invert(1)'}}/>
             </div>
-            <span className="display" style={{ fontSize: 24, color: "var(--green-dark)" }}>
+            <span className="display" style={{ fontSize: 24, color: "var(--green-dark)", letterSpacing: 1 }}>
               OQU<span style={{ color: "var(--orange)" }}>LIX</span>
             </span>
+          </div>
+           
           </a>
 
           <div className="desktop-nav">
@@ -285,7 +289,7 @@ export default function PurchasePage() {
         </nav>
 
         {/* ===== HERO / PURCHASE ===== */}
-        <section style={{ padding: isMobile ? "44px 5% 52px" : "72px 5% 72px", position: "relative", overflow: "hidden" }}>
+        <section id="hero" style={{ padding: isMobile ? "44px 5% 52px" : "72px 5% 72px", position: "relative", overflow: "hidden" }}>
           {/* Aurora bg */}
           <div style={{
             position: "absolute", inset: 0, pointerEvents: "none",
@@ -441,15 +445,10 @@ export default function PurchasePage() {
 
               {/* BUY NOW button */}
               <div className="fade-up d4">
-                <button
-                  className={`buy-btn${buyPressed ? " buy-pop" : ""}`}
-                  onClick={handleBuyNow}
-                  style={{ marginBottom: 14, fontSize: isMobile ? 18 : 20 }}
-                >
-                  <Zap size={21} fill="white" />
-                  Buy Now — ₹499
-                  <ArrowRight size={19} />
-                </button>
+
+                <div className="flex justify-center border-2 border-[#1e40a0] bg-[#072654] rounded-2xl" style={{padding:'5px'}}>
+                  <RazorpayButton/>
+                </div>
 
                 {/* Trust row */}
                 <div style={{ display: "flex", gap: 18, justifyContent: "center", flexWrap: "wrap" }}>
@@ -608,10 +607,12 @@ export default function PurchasePage() {
                 <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textDecoration: "line-through", fontWeight: 700, marginBottom: 2 }}>₹799</div>
                 <div className="display" style={{ fontSize: isMobile ? 56 : 68, color: "var(--yellow)", lineHeight: 1 }}>₹499</div>
               </div>
-              <button className="buy-btn" onClick={handleBuyNow}
-                style={{ width: isMobile ? "100%" : "auto", paddingLeft: 36, paddingRight: 36, fontSize: 18 }}>
-                <Zap size={19} fill="white" /> Buy Now
-              </button>
+              <a href="#hero">
+                <button className="buy-btn" 
+                  style={{ width: isMobile ? "100%" : "auto", paddingLeft: 36, paddingRight: 36, fontSize: 18 }}>
+                  <Zap size={19} fill="white" /> Buy Now
+                </button>
+              </a>
             </div>
           </div>
         </section>
@@ -633,8 +634,9 @@ export default function PurchasePage() {
         <footer style={{ padding: isMobile ? "36px 5% 100px" : "44px 5%", borderTop: "2px solid rgba(0,0,0,0.06)" }}>
           <div className="footer-inner" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 20, maxWidth: 1200, margin: "0 auto" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ width: 36, height: 36, background: "var(--green-mid)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <TreePine size={17} color="white" />
+             
+              <div style={{ width: 36, height: 36, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <img src="./OQ72.png" alt="" style={{filter:'invert(1)'}}/>
               </div>
               <span className="display" style={{ fontSize: 22, color: "var(--green-dark)" }}>
                 OQU<span style={{ color: "var(--orange)" }}>LIX</span><span style={{ color: "var(--orange)" }}>.</span>
@@ -661,7 +663,7 @@ export default function PurchasePage() {
             <div className="display" style={{ fontSize: 26, color: "var(--orange)", lineHeight: 1 }}>₹499</div>
           </div>
           <button className="buy-btn" onClick={handleBuyNow} style={{ flex: 1, fontSize: 16, padding: "13px 18px", borderRadius: 16 }}>
-            <Zap size={17} fill="white" /> Buy Now
+            <Zap size={17} fill="white" />
           </button>
         </div>
 
