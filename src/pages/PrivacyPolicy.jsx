@@ -181,13 +181,16 @@ const PrivacyPolicy = () => {
 
       {/* Header section */}
       <div className="privacy-header">
-        <div className="privacy-header-content">
+        
+        <div className="privacy-header-content flex flex-col items-center">
+            <img src="OQ72.png" width={"60px"} alt="" />
           <h1 className="privacy-title">Privacy Policy</h1>
-          <p className="privacy-subtitle">AnimalAR - Augmented Reality Card Scanning App</p>
+          <p className="privacy-subtitle">HappyLenz - Augmented Reality Card Scanning App</p>
           <p className="policy-meta">
-            Effective Date: <strong>March 2025</strong> • Organization: <strong>Oqulix Private Limited</strong>
+            Effective Date: <strong>March 2026</strong> • Organization: <strong>Oqulix Private Limited</strong>
           </p>
         </div>
+        
       </div>
 
       {/* Table of contents */}
