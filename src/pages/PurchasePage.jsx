@@ -423,11 +423,11 @@ export default function PurchasePage() {
                     ₹499
                   </div>
                   <div style={{ paddingBottom: 8 }}>
-                    <div style={{ fontSize: 14, color: "#bbb", textDecoration: "line-through", fontWeight: 700 }}>₹799</div>
+                    <div style={{ fontSize: 14, color: "#bbb", textDecoration: "line-through", fontWeight: 700 }}>₹699</div>
                     <div style={{
                       fontSize: 12, background: "var(--yellow)", color: "var(--green-dark)",
                       borderRadius: 8, padding: "2px 9px", fontWeight: 900, display: "inline-block",
-                    }}>38% OFF</div>
+                    }}>30% OFF</div>
                   </div>
                 </div>
                 <div style={{ fontSize: 13, color: "#888", fontWeight: 700 }}>
