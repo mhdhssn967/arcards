@@ -40,7 +40,7 @@ function CountUp({ target, suffix = "" }) {
 }
 
 const faqs = [
-  { q: "What's inside the pack?", a: "You get 30 beautifully illustrated animal cards plus 1 special 'Get the App' scan card that guides you to download Oqulix on your phone." },
+  { q: "What's inside the pack?", a: "You get 30 beautifully illustrated animal cards" },
   { q: "How do the interactive animals work?", a: "Open the Oqulix app, point your camera at any card, and a fully animated 3D animal springs to life in your real environment. Each animal has unique movements and sounds." },
   { q: "Is the app free to download?", a: "Yes! The Oqulix app is completely free. The card pack is the only purchase you need — no subscriptions, no in-app purchases, no hidden costs ever." },
   { q: "How long does shipping take?", a: "We ship across India within 3–10 business days. You'll receive a tracking link via WhatsApp and email once your order is dispatched." },
@@ -98,7 +98,6 @@ export default function PurchasePage() {
 
   const chipFeatures = [
     { icon: "🃏", label: "30 AR Animal Cards" },
-    { icon: "📲", label: "1 App Scan Card" },
     { icon: "🦁", label: "Fully Interactive Animals" },
     { icon: "🔊", label: "Sounds & Animations" },
     { icon: "📶", label: "Works Offline" },
@@ -399,7 +398,7 @@ export default function PurchasePage() {
               <img src="/img.png" style={{border:'solid var(--orange)',borderRadius:'10px'}} alt="" />
 
               <p className="fade-up d2" style={{ fontSize: isMobile ? 14 : 16, color: "#666", lineHeight: 1.75, marginBottom: 22, fontWeight: 600, maxWidth: 440 }}>
-                31 cards. Infinite adventures. Scan each card with the free Oqulix app to unleash a living, breathing, fully animated animal right in your room.
+                30 cards. Infinite adventures. Scan each card with the free Oqulix app to unleash a living, breathing, fully animated animal right in your room.
               </p>
 
               {/* Rating */}
@@ -483,7 +482,7 @@ export default function PurchasePage() {
           <div style={{ textAlign: "center", marginBottom: isMobile ? 36 : 56 }}>
             <div className="badge" style={{ background: "var(--green-mid)", marginBottom: 14 }}>✦ What's Inside</div>
             <h2 className="display" style={{ fontSize: isMobile ? 36 : 50, color: "var(--green-dark)", lineHeight: 1.1, marginBottom: 12 }}>
-              31 Cards. One Wild World.
+              30 Cards. One Wild World.
             </h2>
             <p style={{ color: "#666", fontSize: isMobile ? 14 : 16, maxWidth: 480, margin: "0 auto", lineHeight: 1.7, fontWeight: 600 }}>
               Every card is a doorway to a different living creature. Point, scan, and let the wild in.
@@ -558,7 +557,7 @@ export default function PurchasePage() {
 
           <div className="steps-grid">
             {[
-              { step: "01", emoji: "📦", title: "Unbox Your Pack", desc: "Open your Oqulix Safari Pack and find 30 uniquely illustrated animal cards + 1 app card inside." },
+              { step: "01", emoji: "📦", title: "Unbox Your Pack", desc: "Open your Oqulix Safari Pack and find 30 uniquely illustrated animal cards" },
               { step: "02", emoji: "📱", title: "Get the Free App", desc: "Scan the App Card or search 'Oqulix' on the App Store or Play Store. Free, always." },
               { step: "03", emoji: "🦁", title: "Bring Animals to Life", desc: "Hold any card in front of your phone and watch a living, breathing animal jump into your world." },
             ].map((item, i) => (
@@ -603,7 +602,7 @@ export default function PurchasePage() {
                 Ready to Start the <span style={{ color: "var(--orange)" }}>Safari?</span>
               </div>
               <p style={{ color: "rgba(255,255,255,0.62)", fontSize: isMobile ? 14 : 15, lineHeight: 1.7, fontWeight: 600, maxWidth: 440, marginBottom: 16 }}>
-                One pack. 31 cards. The free app handles all the magic — just scan and be amazed.
+                One pack. 30 cards. The free app handles all the magic — just scan and be amazed.
               </p>
               <div style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
                 {["✓ Free App", "✓ Free Shipping", "✓ Easy Returns"].map(t => (

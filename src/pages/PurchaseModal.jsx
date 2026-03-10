@@ -298,7 +298,7 @@ export default function PurchaseModal({ isOpen, onClose }) {
           <div style={{ fontSize: 26 }}>🃏</div>
           <div>
             <div style={{ fontFamily: "Nunito, sans-serif", fontSize: 12, fontWeight: 800, color: "rgba(255,255,255,0.6)" }}>Oqulix Safari Pack</div>
-            <div style={{ fontFamily: "Nunito, sans-serif", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.4)" }}>31 AR Cards · Free Delivery</div>
+            <div style={{ fontFamily: "Nunito, sans-serif", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.4)" }}>30 AR Cards · Free Delivery</div>
           </div>
         </div>
         <div style={{ textAlign: "right" }}>
@@ -447,7 +447,7 @@ export default function PurchaseModal({ isOpen, onClose }) {
           {/* Price summary */}
           <div style={{ background: "white", borderRadius: 16, border: "2px solid rgba(255,107,53,0.15)", padding: "14px 16px", marginBottom: 16 }}>
             {[
-              { label: "Oqulix AR Flash Cards (31 pcs)", value: "₹499" },
+              { label: "Oqulix AR Flash Cards (30 pcs)", value: "₹499" },
               { label: "Shipping", value: "FREE 🎁" },
               { label: "GST Included", value: "—" },
             ].map(r => (
