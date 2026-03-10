@@ -5,6 +5,7 @@ import {
   Truck, RefreshCcw, Lock, ArrowRight, Zap, ScanLine
 } from "lucide-react";
 import RazorpayButton from "../components/RazorpayButton";
+import PurchaseModal from "./PurchaseModal";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -84,6 +85,8 @@ export default function PurchasePage() {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
   const [buyPressed, setBuyPressed] = useState(false);
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleBuyNow = () => {
     setBuyPressed(true);
@@ -446,8 +449,15 @@ export default function PurchasePage() {
               {/* BUY NOW button */}
               <div className="fade-up d4">
 
-                <div className="flex justify-center border-2 border-[#1e40a0] bg-[#072654] rounded-2xl" style={{padding:'5px'}}>
-                  <RazorpayButton/>
+                <div  style={{padding:'5px'}}>
+                  <button
+  className="buy-btn"
+  onClick={() => setModalOpen(true)}
+  style={{ fontSize: 20, padding: "20px 28px" }}
+>
+  🦁 Buy Now — ₹499
+</button>
+
                 </div>
 
                 {/* Trust row */}
@@ -662,11 +672,11 @@ export default function PurchasePage() {
             <div style={{ fontSize: 10, color: "#bbb", textDecoration: "line-through", fontWeight: 700 }}>₹799</div>
             <div className="display" style={{ fontSize: 26, color: "var(--orange)", lineHeight: 1 }}>₹499</div>
           </div>
-          <button className="buy-btn" onClick={handleBuyNow} style={{ flex: 1, fontSize: 16, padding: "13px 18px", borderRadius: 16 }}>
-            <Zap size={17} fill="white" />
+          <button className="buy-btn" onClick={() => setModalOpen(true)} style={{ flex: 1, fontSize: 16, padding: "13px 18px", borderRadius: 16 }}>Buy Now
+            <Zap size={27} fill="white" />
           </button>
         </div>
-
+<PurchaseModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
       </div>
     </>
   );
