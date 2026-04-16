@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import RazorpayButton from "../components/RazorpayButton";
 import PurchaseModal from "./PurchaseModal";
+import DownloadModal from "./DownloadModal";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -84,6 +85,7 @@ function FAQ({ item }) {
 export default function PurchasePage() {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [downloadModalOpen, setDownloadModalOpen] = useState(false);
   const [buyPressed, setBuyPressed] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -272,15 +274,15 @@ export default function PurchasePage() {
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <a href="https://drive.google.com/uc?export=download&id=1e6KIiuRQL8Ia2z2AhJ2xb_iVwCCYq9U4"
+            <button onClick={() => setDownloadModalOpen(true)}
               style={{
                 background: "var(--green-mid)", color: "white",
                 padding: "9px 18px", borderRadius: 12, fontSize: 14,
                 fontWeight: 800, textDecoration: "none", display: "flex", alignItems: "center", gap: 7,
-                fontFamily: "var(--font-body)",
+                fontFamily: "var(--font-body)", border: 'none', cursor: 'pointer'
               }}>
               <Download size={14} /> Free App
-            </a>
+            </button>
             <button className="mob-burger" onClick={() => setMenuOpen(true)} style={{
               background: "rgba(0,0,0,0.06)", border: "none", borderRadius: 10,
               width: 40, height: 40, cursor: "pointer",
@@ -676,6 +678,7 @@ export default function PurchasePage() {
           </button>
         </div>
 <PurchaseModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+<DownloadModal isOpen={downloadModalOpen} onClose={() => setDownloadModalOpen(false)} />
       </div>
     </>
   );

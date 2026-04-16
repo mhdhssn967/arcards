@@ -6,6 +6,7 @@ import {
   StoreIcon
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import DownloadModal from "./DownloadModal";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -87,7 +88,8 @@ function CountUp({ target, suffix = "" }) {
 export default function HomePage() {
   const cards = [1, 2, 3, 4, 5, 6];
   const isMobile = useIsMobile();
-  const [menuOpen, setMenuOpen] = useState(false);
+   const [menuOpen, setMenuOpen] = useState(false);
+  const [downloadModalOpen, setDownloadModalOpen] = useState(false);
 
   return (
     <>
@@ -334,11 +336,12 @@ export default function HomePage() {
                 onMouseLeave={e => e.currentTarget.style.color = "white"}
               >{link.label}</a>
             ))}
-            <a href="https://drive.google.com/uc?export=download&id=1e6KIiuRQL8Ia2z2AhJ2xb_iVwCCYq9U4"
-              onClick={() => setMenuOpen(false)}
-              className="btn-primary" style={{ marginTop: 8 }}>
+            <button
+              className="btn-primary" style={{ marginTop: 8 }}
+              onClick={() => { setMenuOpen(false); setDownloadModalOpen(true); }}
+            >
               <Download size={18} /> Download Free
-            </a>
+            </button>
           </div>
         )}
 
@@ -366,11 +369,11 @@ export default function HomePage() {
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <a href="https://drive.google.com/uc?export=download&id=1e6KIiuRQL8Ia2z2AhJ2xb_iVwCCYq9U4"
+            <button onClick={() => setDownloadModalOpen(true)}
               className="btn-primary"
-              style={{ padding: "9px 18px", fontSize: 14, borderRadius: 12, boxShadow: "0 5px 0 #c43e0f" }}>
+              style={{ padding: "9px 18px", fontSize: 14, borderRadius: 12, boxShadow: "0 5px 0 #c43e0f", border: 'none' }}>
               <Download size={14} /> Download
-            </a>
+            </button>
             <button className="mobile-hamburger" onClick={() => setMenuOpen(true)} style={{
               background: "rgba(0,0,0,0.06)", border: "none", borderRadius: 10,
               width: 40, height: 40, cursor: "pointer",
@@ -415,9 +418,9 @@ export default function HomePage() {
               </p>
 
               <div className="hero-btns fade-up delay-3" style={{ marginBottom: 32 }}>
-                <a href="https://drive.google.com/uc?export=download&id=1e6KIiuRQL8Ia2z2AhJ2xb_iVwCCYq9U4" className="btn-primary">
+                <button onClick={() => setDownloadModalOpen(true)} className="btn-primary">
                   <Download size={18} /> Install Free App
-                </a>
+                </button>
                 <button className="btn-secondary">
                  <Link to="/purchase" className="flex gap-1.5" style={{alignItems:'center'}}> <StoreIcon size={18} /> Buy Cards</Link>
                 </button>
@@ -696,19 +699,19 @@ export default function HomePage() {
                 The app is completely free. Order your cards and unlock a world of wonder.
               </p>
               <div className="cta-btns">
-                <a href="https://drive.google.com/uc?export=download&id=1e6KIiuRQL8Ia2z2AhJ2xb_iVwCCYq9U4" style={{
+                <button onClick={() => setDownloadModalOpen(true)} style={{
                   background: "white", color: "var(--green-dark)",
                   padding: isMobile ? "16px 28px" : "20px 44px", borderRadius: 20,
-                  fontWeight: 900, fontSize: isMobile ? 16 : 19, textDecoration: "none",
+                  fontWeight: 900, fontSize: isMobile ? 16 : 19, textDecoration: "none", border: 'none',
                   display: "inline-flex", alignItems: "center", gap: 10,
                   boxShadow: "0 12px 32px rgba(0,0,0,0.18)", transition: "transform 0.2s",
-                  fontFamily: "var(--font-body)",
+                  fontFamily: "var(--font-body)", cursor: 'pointer'
                 }}
                   onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
                   onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
                 >
                   <Download size={19} /> Download App
-                </a>
+                </button>
                 <a href="#" style={{
                   background: "rgba(255,255,255,0.1)", color: "white",
                   padding: isMobile ? "16px 28px" : "20px 44px", borderRadius: 20,
@@ -752,6 +755,7 @@ export default function HomePage() {
           </div>
         </footer>
 
+        <DownloadModal isOpen={downloadModalOpen} onClose={() => setDownloadModalOpen(false)} />
       </div>
     </>
   );
