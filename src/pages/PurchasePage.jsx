@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   TreePine, Download, Menu, X, Star, ShieldCheck,
   Sparkles, Package, Smartphone, CheckCircle2, ChevronDown,
-  Truck, RefreshCcw, Lock, ArrowRight, Zap, ScanLine
+  Truck, RefreshCcw, Lock, ArrowRight, Zap, ScanLine,
+  PlayCircle
 } from "lucide-react";
 import RazorpayButton from "../components/RazorpayButton";
 import PurchaseModal from "./PurchaseModal";
@@ -86,6 +87,7 @@ export default function PurchasePage() {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
+  const [activeDemoCard, setActiveDemoCard] = useState(1);
   const [buyPressed, setBuyPressed] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -233,6 +235,7 @@ export default function PurchasePage() {
             </button>
             {[
               { label: "What's Inside", href: "#whats-inside" },
+              { label: "Live Demo", href: "#demo" },
               { label: "How It Works", href: "#how" },
               { label: "FAQs", href: "#faq" },
             ].map(l => (
@@ -257,18 +260,19 @@ export default function PurchasePage() {
         }}>
           <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 38, height: 38, borderRadius: 11, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <img src="./OQ72.png" alt="" style={{filter:'invert(1)'}}/>
+              <div style={{ width: 38, height: 38, borderRadius: 11, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <img src="./OQ72.png" alt="" style={{ filter: 'invert(1)' }} />
+              </div>
+              <span className="display" style={{ fontSize: 24, color: "var(--green-dark)", letterSpacing: 1 }}>
+                OQU<span style={{ color: "var(--orange)" }}>LIX</span>
+              </span>
             </div>
-            <span className="display" style={{ fontSize: 24, color: "var(--green-dark)", letterSpacing: 1 }}>
-              OQU<span style={{ color: "var(--orange)" }}>LIX</span>
-            </span>
-          </div>
-           
+
           </a>
 
           <div className="desktop-nav">
             <a href="#whats-inside" className="nav-link">What's Inside</a>
+            <a href="#demo" className="nav-link">Live Demo</a>
             <a href="#how" className="nav-link">How It Works</a>
             <a href="#faq" className="nav-link">FAQs</a>
           </div>
@@ -323,11 +327,11 @@ export default function PurchasePage() {
               <div className="cf1" style={{
                 position: "absolute", left: "2%", top: "12%",
                 width: "50%",
-    
+
                 borderRadius: 10, boxShadow: "0 20px 50px rgba(0,0,0,0.18)",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
-                                <img src="/Tiger.png" alt="Animal Card" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 5, display: "block" }} />
+                <img src="/Tiger.png" alt="Animal Card" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 5, display: "block" }} />
 
               </div>
 
@@ -335,11 +339,11 @@ export default function PurchasePage() {
               <div className="cf3" style={{
                 position: "absolute", right: "2%", top: "16%",
                 width: "48%",
-                
+
                 borderRadius: 10, boxShadow: "0 20px 50px rgba(0,0,0,0.18)",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
-                                <img src="/Dog.png" alt="Animal Card" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 5, display: "block" }} />
+                <img src="/Dog.png" alt="Animal Card" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 5, display: "block" }} />
 
                 <Sparkles size={60} color="rgba(255,255,255,0.18)" />
               </div>
@@ -348,7 +352,7 @@ export default function PurchasePage() {
               <div className="cf2" style={{
                 position: "relative", zIndex: 5,
                 width: "55%",
-                 borderRadius: 10, padding: 12,
+                borderRadius: 10, padding: 12,
                 boxShadow: " 0 0 0 1px rgba(0,0,0,0.04)",
               }}>
                 <img src="/Deer.png" alt="Animal Card" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 5, display: "block" }} />
@@ -394,10 +398,10 @@ export default function PurchasePage() {
               </div>
 
               <h1 className="display fade-up d1" style={{ fontSize: isMobile ? 42 : 54, color: "var(--green-dark)", lineHeight: 1.03, marginBottom: 14 }}>
-                Oqulix <span style={{ color: "var(--orange)" ,fontWeight:'800'}}>AR Flash Cards</span><br />Card Pack
+                Oqulix <span style={{ color: "var(--orange)", fontWeight: '800' }}>AR Flash Cards</span><br />Card Pack
               </h1>
 
-              <img src="/img.png" style={{border:'solid var(--orange)',borderRadius:'10px'}} alt="" />
+              <img src="/img.png" style={{ border: 'solid var(--orange)', borderRadius: '10px' }} alt="" />
 
               <p className="fade-up d2" style={{ fontSize: isMobile ? 14 : 16, color: "#666", lineHeight: 1.75, marginBottom: 22, fontWeight: 600, maxWidth: 440 }}>
                 30 cards. Infinite adventures. Scan each card with the free Oqulix app to unleash a living, breathing, fully animated animal right in your room.
@@ -406,7 +410,7 @@ export default function PurchasePage() {
               {/* Rating */}
               <div className="fade-up d2" style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 26 }}>
                 <div style={{ display: "flex", gap: 3 }}>
-                  {[1,2,3,4,5].map(s => <Star key={s} size={16} fill="#FFD93D" color="#FFD93D" />)}
+                  {[1, 2, 3, 4, 5].map(s => <Star key={s} size={16} fill="#FFD93D" color="#FFD93D" />)}
                 </div>
                 <span style={{ fontWeight: 800, fontSize: 14, color: "var(--green-dark)" }}>4.9</span>
                 <span style={{ color: "#ccc" }}>/5</span>
@@ -447,17 +451,39 @@ export default function PurchasePage() {
                 ))}
               </div>
 
-              {/* BUY NOW button */}
-              <div className="fade-up d4">
-
-                <div  style={{padding:'5px'}}>
+              {/* BUY NOW & DEMO button */}
+              <div className="fade-up d4" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <a href="#demo"
+                  style={{
+                    width: '100%',
+                    background: 'var(--teal)',
+                    color: 'white',
+                    padding: "18px 28px",
+                    borderRadius: '20px',
+                    fontWeight: 900,
+                    fontSize: 18,
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 10,
+                    boxShadow: '0 6px 0 #00a88b',
+                    transition: 'all 0.15s',
+                    fontFamily: "var(--font-body)"
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.boxShadow = '0 4px 0 #00a88b'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 6px 0 #00a88b'; }}
+                >
+                  <PlayCircle size={22} fill="white" color="var(--teal)" /> Try Live Demo First
+                </a>
+                <div style={{ padding: '5px' }}>
                   <button
-  className="buy-btn"
-  onClick={() => setModalOpen(true)}
-  style={{ fontSize: 20, padding: "20px 28px" }}
->
-  🦁 Buy Now — ₹499
-</button>
+                    className="buy-btn"
+                    onClick={() => setModalOpen(true)}
+                    style={{ fontSize: 20, padding: "20px 28px" }}
+                  >
+                    🦁 Buy Now — ₹499
+                  </button>
 
                 </div>
 
@@ -477,7 +503,7 @@ export default function PurchasePage() {
           </div>
         </section>
 
-       
+
 
         {/* ===== WHAT'S INSIDE ===== */}
         <section id="whats-inside" style={{ padding: isMobile ? "60px 5%" : "100px 5%", background: "white" }}>
@@ -545,7 +571,7 @@ export default function PurchasePage() {
           </div>
 
           {/* 4 highlights */}
-         
+
         </section>
 
         {/* ===== HOW IT WORKS ===== */}
@@ -581,8 +607,135 @@ export default function PurchasePage() {
           </div>
         </section>
 
+        {/* ===== LIVE DEMO / COMPATIBILITY TEST ===== */}
+        <section id="demo" style={{ padding: isMobile ? "60px 5%" : "100px 5%", background: "white" }}>
+          <div style={{ textAlign: "center", marginBottom: isMobile ? 36 : 60 }}>
+            <div className="badge" style={{ background: "var(--teal)", marginBottom: 16 }}>✦ Live Demo</div>
+            <h2 className="display" style={{ fontSize: isMobile ? 40 : 54, color: "var(--green-dark)", lineHeight: 1.1, marginBottom: 16 }}>
+              Test it out <span style={{ color: "var(--orange)" }}>Live!</span>
+            </h2>
+            <p style={{ color: "#666", fontSize: isMobile ? 15 : 18, maxWidth: 640, margin: "0 auto", lineHeight: 1.7, fontWeight: 600 }}>
+              Try before you buy! Download the app and point it at these demo cards using another device to see the magic come to life.
+            </p>
+          </div>
+
+          <div style={{
+            maxWidth: 1000, margin: "0 auto",
+            display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1.2fr",
+            gap: 40, alignItems: "center",
+            background: "#fdf8f0", padding: isMobile ? "32px 20px" : "60px",
+            borderRadius: 40, border: "2px solid #faead1",
+            boxShadow: "0 20px 60px rgba(255,107,53,0.05)"
+          }}>
+            {/* Left: How it works */}
+            <div>
+              <h3 className="display" style={{ fontSize: 32, color: "#1A3A2A", marginBottom: 24 }}>How to Test:</h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+                {[
+                  { step: 1, title: "Install the App", text: "Download and install the Happy Lenz app on your Android phone." },
+                  { step: 2, title: "Pick a Card", text: "Choose any animal from the demo gallery on the right." },
+                  { step: 3, title: "Scan & Witness", text: "Open the app and scan the screen image. See if it's compatible & magic!" },
+                ].map((s, i) => (
+                  <div key={i} style={{ display: "flex", gap: 18, alignItems: "flex-start" }}>
+                    <div style={{
+                      width: 32, height: 32, borderRadius: "50%", background: "var(--orange)",
+                      color: "white", display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: 15, fontWeight: 900, flexShrink: 0, boxShadow: "0 4px 10px rgba(255,107,53,0.3)"
+                    }}>{s.step}</div>
+                    <div>
+                      <div style={{ fontWeight: 900, fontSize: 17, color: "#1A3A2A", marginBottom: 4 }}>{s.title}</div>
+                      <div style={{ fontSize: 14, color: "#666", fontWeight: 600, lineHeight: 1.5 }}>{s.text}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <button
+                  onClick={() => setDownloadModalOpen(true)}
+                  className="buy-btn"
+                  style={{ fontSize: 16, padding: "16px 28px" }}
+                >
+                  <Download size={18} /> Download App
+                </button>
+                <div style={{ fontSize: 12, color: '#999', textAlign: 'center', fontWeight: 700 }}>
+                  Android 8.0+ Required
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Gallery/Slider */}
+            <div style={{ position: "relative" }}>
+              <div style={{
+                background: "white", padding: 8, borderRadius: 28,
+                boxShadow: "0 30px 60px rgba(0,0,0,0.12)",
+                border: "1px solid #eee", position: "relative", zIndex: 2
+              }}>
+                <div style={{
+                  borderRadius: 20, overflow: 'hidden',
+                  aspectRatio: '1', background: '#f5f5f5',
+                  position: 'relative', border: '3px solid #f5f5f5'
+                }}>
+                  <img
+                    src={`/${activeDemoCard}.jpg`}
+                    alt={`Demo Card ${activeDemoCard}`}
+                    key={activeDemoCard}
+                    style={{
+                      width: '100%', height: '100%', objectFit: 'contain',
+                      animation: 'fadeIn 0.5s ease'
+                    }}
+                  />
+                  
+                </div>
+<div style={{
+                    
+                    background: 'rgba(0,0,0,0.6)', color: 'white', padding: '6px 4px',
+                    borderRadius: 99, fontSize: 11, fontWeight: 800, backdropFilter: 'blur(4px)',
+                    letterSpacing: 1, whiteSpace: 'nowrap',textAlign:'center',margin:'10px'
+                  }}>
+                    POINT CAMERA AT THIS CARD
+                  </div>
+                <div style={{
+                  display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)',
+                  gap: 8, marginTop: 15
+                }}>
+                  {[1, 2, 3, 4, 5, 6].map(id => (
+                    <button
+                      key={id}
+                      onClick={() => setActiveDemoCard(id)}
+                      style={{
+                        padding: 0, border: `3px solid ${activeDemoCard === id ? 'var(--orange)' : 'transparent'}`,
+                        borderRadius: 12, overflow: 'hidden', cursor: 'pointer', transition: 'all 0.2s',
+                        background: 'none'
+                      }}
+                    >
+                      <img src={`/${id}.jpg`} alt={`Thumb ${id}`} style={{ width: '100%', display: 'block' }} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Decorative elements */}
+              <div style={{
+                position: 'absolute', top: -20, right: -20, zIndex: 1,
+                width: 100, height: 100, background: 'var(--yellow)',
+                borderRadius: '50%', opacity: 0.3, filter: 'blur(20px)'
+              }} />
+              <div style={{
+                position: 'absolute', bottom: -30, left: -20, zIndex: 1,
+                width: 140, height: 140, background: 'var(--teal)',
+                borderRadius: '50%', opacity: 0.2, filter: 'blur(30px)'
+              }} />
+            </div>
+          </div>
+          <style>{`
+            @keyframes fadeIn { from{opacity:0.3} to{opacity:1} }
+          `}</style>
+        </section>
+
+
         {/* ===== STATS ===== */}
-        
+
 
         {/* ===== FINAL CTA ===== */}
         <section style={{ padding: isMobile ? "0 4% 60px" : "0 5% 80px" }}>
@@ -594,7 +747,7 @@ export default function PurchasePage() {
             gridTemplateColumns: "1fr auto",
             gap: 48, alignItems: "center",
             position: "relative", overflow: "hidden",
-            maxWidth: 1100, margin: "0 auto",marginTop:'80px'
+            maxWidth: 1100, margin: "0 auto", marginTop: '80px'
           }}>
             <div style={{ position: "absolute", top: -30, right: -30, width: 100, height: 100, borderRadius: "50%", border: "10px solid rgba(255,255,255,0.07)", pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: -40, left: -40, width: 160, height: 160, borderRadius: "50%", border: "16px solid rgba(255,255,255,0.04)", pointerEvents: "none" }} />
@@ -619,7 +772,7 @@ export default function PurchasePage() {
                 <div className="display" style={{ fontSize: isMobile ? 56 : 68, color: "var(--yellow)", lineHeight: 1 }}>₹499</div>
               </div>
               <a href="#hero">
-                <button className="buy-btn" 
+                <button className="buy-btn"
                   style={{ width: isMobile ? "100%" : "auto", paddingLeft: 36, paddingRight: 36, fontSize: 18 }}>
                   <Zap size={19} fill="white" /> Buy Now
                 </button>
@@ -645,9 +798,9 @@ export default function PurchasePage() {
         <footer style={{ padding: isMobile ? "36px 5% 100px" : "44px 5%", borderTop: "2px solid rgba(0,0,0,0.06)" }}>
           <div className="footer-inner" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 20, maxWidth: 1200, margin: "0 auto" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-             
+
               <div style={{ width: 36, height: 36, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <img src="./OQ72.png" alt="" style={{filter:'invert(1)'}}/>
+                <img src="./OQ72.png" alt="" style={{ filter: 'invert(1)' }} />
               </div>
               <span className="display" style={{ fontSize: 22, color: "var(--green-dark)" }}>
                 OQU<span style={{ color: "var(--orange)" }}>LIX</span><span style={{ color: "var(--orange)" }}>.</span>
@@ -677,8 +830,8 @@ export default function PurchasePage() {
             <Zap size={27} fill="white" />
           </button>
         </div>
-<PurchaseModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
-<DownloadModal isOpen={downloadModalOpen} onClose={() => setDownloadModalOpen(false)} />
+        <PurchaseModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+        <DownloadModal isOpen={downloadModalOpen} onClose={() => setDownloadModalOpen(false)} />
       </div>
     </>
   );

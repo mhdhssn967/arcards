@@ -326,6 +326,7 @@ export default function HomePage() {
             {[
               { label: "Features", href: "#features" },
               { label: "Cards", href: "#collection" },
+              { label: "Live Demo", href: "/purchase#demo" },
               { label: "How It Works", href: "#howto" },
             ].map(link => (
               <a key={link.label} href={link.href} onClick={() => setMenuOpen(false)} style={{
@@ -364,6 +365,7 @@ export default function HomePage() {
 
           <div className="desktop-nav">
             <a href="#features" className="nav-link">Features</a>
+            <a href="/purchase#demo" className="nav-link">Live Demo</a>
             <a href="#collection" className="nav-link">Cards</a>
             <a href="#howto" className="nav-link">How It Works</a>
           </div>
@@ -421,6 +423,27 @@ export default function HomePage() {
                 <button onClick={() => setDownloadModalOpen(true)} className="btn-primary">
                   <Download size={18} /> Install Free App
                 </button>
+                <a href="/purchase#demo"
+                  style={{
+                    background: 'var(--teal)',
+                    color: 'white',
+                    padding: "16px 28px",
+                    borderRadius: '16px',
+                    fontWeight: 900,
+                    fontSize: 16,
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 10,
+                    boxShadow: '0 6px 0 #00a88b',
+                    transition: 'all 0.15s',
+                    fontFamily: "var(--font-body)"
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.boxShadow = '0 4px 0 #00a88b'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 6px 0 #00a88b'; }}
+                >
+                  <PlayCircle size={21} fill="white" color="var(--teal)" /> Try Live Demo
+                </a>
                 <button className="btn-secondary">
                  <Link to="/purchase" className="flex gap-1.5" style={{alignItems:'center'}}> <StoreIcon size={18} /> Buy Cards</Link>
                 </button>
