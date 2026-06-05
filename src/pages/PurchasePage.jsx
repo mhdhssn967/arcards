@@ -8,6 +8,7 @@ import {
 import RazorpayButton from "../components/RazorpayButton";
 import PurchaseModal from "./PurchaseModal";
 import DownloadModal from "./DownloadModal";
+import { trackPageVisit, trackClick } from "../utils/analytics";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -89,14 +90,15 @@ export default function PurchasePage() {
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
   const [activeDemoCard, setActiveDemoCard] = useState(1);
   const [buyPressed, setBuyPressed] = useState(false);
-
   const [modalOpen, setModalOpen] = useState(false);
+
+  // Track page visit on mount
+  useEffect(() => { trackPageVisit(); }, []);
 
   const handleBuyNow = () => {
     setBuyPressed(true);
     setTimeout(() => setBuyPressed(false), 500);
-    // Replace with your payment link:
-    // window.location.href = "YOUR_RAZORPAY_OR_PAYMENT_LINK";
+    trackClick('buy_now_cta');
     alert("Redirecting to checkout… 🎉");
   };
 
@@ -453,7 +455,7 @@ export default function PurchasePage() {
 
               {/* BUY NOW & DEMO button */}
               <div className="fade-up d4" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <a href="#demo"
+                <a href="#demo" onClick={() => trackClick('try_demo_purchase')}
                   style={{
                     width: '100%',
                     background: 'var(--teal)',
@@ -479,12 +481,11 @@ export default function PurchasePage() {
                 <div style={{ padding: '5px' }}>
                   <button
                     className="buy-btn"
-                    onClick={() => setModalOpen(true)}
+                    onClick={() => { setModalOpen(true); trackClick('buy_now_hero'); }}
                     style={{ fontSize: 20, padding: "20px 28px" }}
                   >
                     🦁 Buy Now — ₹499
                   </button>
-
                 </div>
 
                 {/* Trust row */}

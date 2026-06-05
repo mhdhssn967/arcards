@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import DownloadModal from "./DownloadModal";
+import { trackPageVisit, trackClick } from "../utils/analytics";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -88,8 +89,11 @@ function CountUp({ target, suffix = "" }) {
 export default function HomePage() {
   const cards = [1, 2, 3, 4, 5, 6];
   const isMobile = useIsMobile();
-   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
+
+  // Track page visit on mount
+  useEffect(() => { trackPageVisit(); }, []);
 
   return (
     <>
@@ -339,7 +343,7 @@ export default function HomePage() {
             ))}
             <button
               className="btn-primary" style={{ marginTop: 8 }}
-              onClick={() => { setMenuOpen(false); setDownloadModalOpen(true); }}
+              onClick={() => { setMenuOpen(false); setDownloadModalOpen(true); trackClick('download_mobile_menu'); }}
             >
               <Download size={18} /> Download Free
             </button>
@@ -371,7 +375,7 @@ export default function HomePage() {
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <button onClick={() => setDownloadModalOpen(true)}
+            <button onClick={() => { setDownloadModalOpen(true); trackClick('download_nav'); }}
               className="btn-primary"
               style={{ padding: "9px 18px", fontSize: 14, borderRadius: 12, boxShadow: "0 5px 0 #c43e0f", border: 'none' }}>
               <Download size={14} /> Download
@@ -422,11 +426,11 @@ export default function HomePage() {
               <div className="fade-up delay-3" style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 32 }}>
                 {/* Top row: two equal-width buttons */}
                 <div style={{ display: 'flex', gap: 12 }}>
-                  <button onClick={() => setDownloadModalOpen(true)} className="btn-primary"
+                  <button onClick={() => { setDownloadModalOpen(true); trackClick('install_app'); }} className="btn-primary"
                     style={{ flex: 1, justifyContent: 'center' }}>
                     <Download size={18} /> Install Free App
                   </button>
-                  <a href="/purchase#demo"
+                  <a href="/purchase#demo" onClick={() => trackClick('try_demo')}
                     style={{
                       flex: 1,
                       background: 'var(--teal)',
@@ -453,6 +457,7 @@ export default function HomePage() {
                 {/* Full-width Buy Cards button */}
                 <Link
                   to="/purchase"
+                  onClick={() => trackClick('buy_cards')}
                   style={{
                     width: '100%',
                     background: 'var(--purple)',
@@ -752,7 +757,7 @@ export default function HomePage() {
                 The app is completely free. Order your cards and unlock a world of wonder.
               </p>
               <div className="cta-btns">
-                <button onClick={() => setDownloadModalOpen(true)} style={{
+                <button onClick={() => { setDownloadModalOpen(true); trackClick('download_app_cta'); }} style={{
                   background: "white", color: "var(--green-dark)",
                   padding: isMobile ? "16px 28px" : "20px 44px", borderRadius: 20,
                   fontWeight: 900, fontSize: isMobile ? 16 : 19, textDecoration: "none", border: 'none',
