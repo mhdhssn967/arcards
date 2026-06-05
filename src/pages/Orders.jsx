@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { initializeApp, getApps } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, onSnapshot, doc, updateDoc, query, orderBy } from "firebase/firestore";
-import { Package, LogOut, CheckCircle2, Clock, Truck, Search, RefreshCw, ChevronDown, X, Phone, Mail, MapPin, Hash, AlertCircle, ShieldCheck, Loader2 } from "lucide-react";
+import { Package, LogOut, CheckCircle2, Clock, Truck, Search, RefreshCw, ChevronDown, X, Phone, Mail, MapPin, Hash, AlertCircle, ShieldCheck, Loader2, BarChart2 } from "lucide-react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAlvCd7GblYcJAVKTWjMyM8Wwk1ehCQC4A",
@@ -340,6 +340,10 @@ export default function Orders() {
             <div style={{ width:7, height:7, borderRadius:"50%", background:"#38a169", animation:"pulseDot2 2s ease-in-out infinite" }}/>
             <span style={{ fontSize:10, fontWeight:800, color:"#a0aec0" }}>LIVE</span>
           </div>
+          <a href="/analytics"
+            style={{ display:"flex", alignItems:"center", gap:5, background:"linear-gradient(135deg,#845EC2,#5c3d8f)", border:"none", borderRadius:9, padding:"7px 13px", cursor:"pointer", color:"white", fontSize:12, fontWeight:800, fontFamily:"Nunito,sans-serif", textDecoration:"none", boxShadow:"0 3px 0 #3d2760" }}>
+            <BarChart2 size={13}/> View Demographics
+          </a>
           <button onClick={()=>{setSpinning(true);setTimeout(()=>setSpinning(false),700);}}
             style={{ background:"#f7fafc", border:"1px solid #e2e8f0", borderRadius:9, width:32, height:32, display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer" }}>
             <RefreshCw size={14} color="#718096" style={{animation:spinning?"spin 0.7s linear":"none"}}/>

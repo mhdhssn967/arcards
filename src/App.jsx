@@ -5,6 +5,7 @@ import PurchasePage from "./pages/PurchasePage";
 import Navbar from "./components/Navbar";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Orders from "./pages/Orders";
+import AnalyticsDashboard from "./pages/AnalyticsDashboard";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/purchase" element={<PurchasePage />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/analytics" element={<AnalyticsDashboard />} />
       </Routes>
     </div>
   );
