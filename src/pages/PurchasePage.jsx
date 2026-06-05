@@ -545,23 +545,23 @@ export default function PurchasePage() {
               </div>
             </div>
 
-            {/* 1 App Card */}
+            {/* QR on Box */}
             <div style={{
               background: "linear-gradient(135deg, #1A3A2A, #2D6A4F)",
               borderRadius: 28, padding: isMobile ? "32px 24px" : "44px 36px",
               position: "relative", overflow: "hidden",
             }}>
-              <div style={{ position: "absolute", right: -16, top: -16, fontSize: 110, opacity: 0.06, pointerEvents: "none" }}>📲</div>
+              <div style={{ position: "absolute", right: -16, top: -16, fontSize: 110, opacity: 0.06, pointerEvents: "none" }}>📦</div>
               <div style={{
                 width: 54, height: 54, background: "rgba(255,255,255,0.1)", borderRadius: 16,
                 display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 18,
               }}>
                 <Smartphone size={24} color="var(--teal)" />
               </div>
-              <div className="display" style={{ fontSize: isMobile ? 52 : 64, color: "var(--teal)", lineHeight: 1, marginBottom: 6 }}>1</div>
-              <h3 style={{ fontWeight: 900, fontSize: isMobile ? 18 : 21, color: "white", marginBottom: 12 }}>App Scan Card</h3>
+              <div className="display" style={{ fontSize: isMobile ? 52 : 64, color: "var(--teal)", lineHeight: 1, marginBottom: 6 }}>QR</div>
+              <h3 style={{ fontWeight: 900, fontSize: isMobile ? 18 : 21, color: "white", marginBottom: 12 }}>QR Code on the Box</h3>
               <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 14, lineHeight: 1.7, fontWeight: 600, marginBottom: 20 }}>
-                New to Oqulix? Scan this card first. It instantly guides you to download the free app on your smart phone — you're exploring in seconds.
+                Just scan the QR code printed on your Oqulix box — it instantly takes you to download the free app. You're exploring in seconds.
               </p>
               <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(0,201,167,0.15)", borderRadius: 12, padding: "9px 14px" }}>
                 <Download size={13} color="var(--teal)" />
@@ -585,8 +585,8 @@ export default function PurchasePage() {
 
           <div className="steps-grid">
             {[
-              { step: "01", emoji: "📦", title: "Unbox Your Pack", desc: "Open your Oqulix Safari Pack and find 30 uniquely illustrated animal cards" },
-              { step: "02", emoji: "📱", title: "Get the Free App", desc: "Scan the App Card or search 'Oqulix' on the App Store or Play Store. Free, always." },
+              { step: "01", emoji: "📦", title: "Unbox Your Pack", desc: "Open your Oqulix box and find 30 uniquely illustrated animal cards inside." },
+              { step: "02", emoji: "📱", title: "Get the Free App", desc: "Scan the QR code on the box to download the free Oqulix app instantly. No searching needed." },
               { step: "03", emoji: "🦁", title: "Bring Animals to Life", desc: "Hold any card in front of your phone and watch a living, breathing animal jump into your world." },
             ].map((item, i) => (
               <div key={i} style={{

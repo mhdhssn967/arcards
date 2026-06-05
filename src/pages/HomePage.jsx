@@ -419,34 +419,64 @@ export default function HomePage() {
                 Transform your floor into a safari. Oqulix uses cutting-edge AR to bring 3D animals to life with just a simple card scan.
               </p>
 
-              <div className="hero-btns fade-up delay-3" style={{ marginBottom: 32 }}>
-                <button onClick={() => setDownloadModalOpen(true)} className="btn-primary">
-                  <Download size={18} /> Install Free App
-                </button>
-                <a href="/purchase#demo"
+              <div className="fade-up delay-3" style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 32 }}>
+                {/* Top row: two equal-width buttons */}
+                <div style={{ display: 'flex', gap: 12 }}>
+                  <button onClick={() => setDownloadModalOpen(true)} className="btn-primary"
+                    style={{ flex: 1, justifyContent: 'center' }}>
+                    <Download size={18} /> Install Free App
+                  </button>
+                  <a href="/purchase#demo"
+                    style={{
+                      flex: 1,
+                      background: 'var(--teal)',
+                      color: 'white',
+                      padding: "16px 14px",
+                      borderRadius: '16px',
+                      fontWeight: 900,
+                      fontSize: 16,
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 8,
+                      boxShadow: '0 6px 0 #00a88b',
+                      transition: 'all 0.15s',
+                      fontFamily: "var(--font-body)"
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.boxShadow = '0 4px 0 #00a88b'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 6px 0 #00a88b'; }}
+                  >
+                    <PlayCircle size={20} fill="white" color="var(--teal)" /> Try Live Demo
+                  </a>
+                </div>
+                {/* Full-width Buy Cards button */}
+                <Link
+                  to="/purchase"
                   style={{
-                    background: 'var(--teal)',
+                    width: '100%',
+                    background: 'var(--purple)',
                     color: 'white',
-                    padding: "16px 28px",
+                    padding: '16px 28px',
                     borderRadius: '16px',
                     fontWeight: 900,
-                    fontSize: 16,
+                    fontSize: 17,
                     textDecoration: 'none',
-                    display: 'inline-flex',
+                    display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     gap: 10,
-                    boxShadow: '0 6px 0 #00a88b',
+                    boxShadow: '0 7px 0 #5c3d8f, 0 12px 32px rgba(132,94,194,0.35)',
                     transition: 'all 0.15s',
-                    fontFamily: "var(--font-body)"
+                    fontFamily: 'var(--font-body)',
+                    border: 'none',
+                    letterSpacing: '0.02em',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(2px)'; e.currentTarget.style.boxShadow = '0 4px 0 #00a88b'; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 6px 0 #00a88b'; }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(3px)'; e.currentTarget.style.boxShadow = '0 4px 0 #5c3d8f, 0 8px 20px rgba(132,94,194,0.25)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 7px 0 #5c3d8f, 0 12px 32px rgba(132,94,194,0.35)'; }}
                 >
-                  <PlayCircle size={21} fill="white" color="var(--teal)" /> Try Live Demo
-                </a>
-                <button className="btn-secondary">
-                 <Link to="/purchase" className="flex gap-1.5" style={{alignItems:'center'}}> <StoreIcon size={18} /> Buy Cards</Link>
-                </button>
+                  <StoreIcon size={20} /> 🦁 Buy Cards — ₹499
+                </Link>
               </div>
 
               <div className="fade-up delay-4" style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
@@ -606,7 +636,7 @@ export default function HomePage() {
           <div className="steps-grid">
             {[
               { step: "01", emoji: "📦", title: "Get the Cards", desc: "Order your physical Oqulix card pack — beautifully illustrated & built to last." },
-              { step: "02", emoji: "📱", title: "Open the App", desc: "Launch Oqulix on any modern Android device. No account needed." },
+              { step: "02", emoji: "📱", title: "Scan the QR Code", desc: "Scan the QR code on the box to download the free Oqulix app instantly — no searching needed." },
               { step: "03", emoji: "✨", title: "Watch Magic Happen", desc: "Scan any card and watch your animal leap into the real world in full 3D!" },
             ].map((item, i) => (
               <div key={i} style={{
