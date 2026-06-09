@@ -157,7 +157,7 @@ export default function PurchaseModal({ isOpen, onClose }) {
       },
       product: {
         name: "Oqulix AR Flash Cards Pack",
-        price: 49900,
+        price: 34900,
         currency: "INR",
       },
       payment_confirmed: false,   // ← false until Razorpay confirms
@@ -302,8 +302,8 @@ export default function PurchaseModal({ isOpen, onClose }) {
           </div>
         </div>
         <div style={{ textAlign: "right" }}>
-          <div style={{ fontFamily: "Nunito, sans-serif", fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.35)", textDecoration: "line-through" }}>₹799</div>
-          <div style={{ fontFamily: "Boogaloo, cursive", fontSize: 26, color: "#FFD93D", lineHeight: 1 }}>₹499</div>
+          <div style={{ fontFamily: "Nunito, sans-serif", fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.35)", textDecoration: "line-through" }}>₹699</div>
+          <div style={{ fontFamily: "Boogaloo, cursive", fontSize: 26, color: "#FFD93D", lineHeight: 1 }}>₹349</div>
         </div>
       </div>
 
@@ -447,7 +447,7 @@ export default function PurchaseModal({ isOpen, onClose }) {
           {/* Price summary */}
           <div style={{ background: "white", borderRadius: 16, border: "2px solid rgba(255,107,53,0.15)", padding: "14px 16px", marginBottom: 16 }}>
             {[
-              { label: "Oqulix AR Flash Cards (30 pcs)", value: "₹499" },
+              { label: "Oqulix AR Flash Cards (30 pcs)", value: "₹349" },
               { label: "Shipping", value: "FREE 🎁" },
               { label: "GST Included", value: "—" },
             ].map(r => (
@@ -459,7 +459,7 @@ export default function PurchaseModal({ isOpen, onClose }) {
             <div style={{ height: 1, background: "rgba(0,0,0,0.08)", margin: "10px 0" }} />
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span style={{ fontFamily: "Nunito, sans-serif", fontSize: 15, fontWeight: 900, color: "#1A3A2A" }}>Total</span>
-              <span style={{ fontFamily: "Boogaloo, cursive", fontSize: 28, color: "#FF6B35" }}>₹499</span>
+              <span style={{ fontFamily: "Boogaloo, cursive", fontSize: 28, color: "#FF6B35" }}>₹349</span>
             </div>
           </div>
 

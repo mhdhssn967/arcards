@@ -3,12 +3,82 @@ import {
   TreePine, Download, Menu, X, Star, ShieldCheck,
   Sparkles, Package, Smartphone, CheckCircle2, ChevronDown,
   Truck, RefreshCcw, Lock, ArrowRight, Zap, ScanLine,
-  PlayCircle
+  PlayCircle, Clock, Flame
 } from "lucide-react";
 import RazorpayButton from "../components/RazorpayButton";
 import PurchaseModal from "./PurchaseModal";
 import DownloadModal from "./DownloadModal";
 import { trackPageVisit, trackClick } from "../utils/analytics";
+
+// ── Countdown Timer: expires 10 PM IST tomorrow (June 10 2026) ──
+const OFFER_END = new Date('2026-06-10T22:00:00+05:30').getTime();
+
+function useCountdown() {
+  const [timeLeft, setTimeLeft] = useState(() => Math.max(0, OFFER_END - Date.now()));
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+    const id = setInterval(() => {
+      const remaining = Math.max(0, OFFER_END - Date.now());
+      setTimeLeft(remaining);
+      if (remaining <= 0) clearInterval(id);
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+  const hrs = Math.floor(timeLeft / 3600000);
+  const mins = Math.floor((timeLeft % 3600000) / 60000);
+  const secs = Math.floor((timeLeft % 60000) / 1000);
+  return { hrs, mins, secs, expired: timeLeft <= 0 };
+}
+
+function CountdownBadge({ compact = false }) {
+  const { hrs, mins, secs, expired } = useCountdown();
+  if (expired) return null;
+  const pad = n => String(n).padStart(2, '0');
+
+  if (compact) {
+    return (
+      <div style={{
+        display: 'inline-flex', alignItems: 'center', gap: 6,
+        background: 'linear-gradient(135deg, #ff4444, #ff6b35)',
+        padding: '4px 10px', borderRadius: 99, fontSize: 10,
+        fontWeight: 900, color: 'white', fontFamily: 'Nunito, sans-serif',
+        letterSpacing: 0.5, animation: 'offerPulse 2s ease-in-out infinite',
+      }}>
+        <Flame size={10} /> {pad(hrs)}:{pad(mins)}:{pad(secs)}
+      </div>
+    );
+  }
+
+  return (
+    <div style={{
+      background: 'linear-gradient(135deg, #1a1a2e, #16213e)',
+      borderRadius: 16, padding: '12px 16px',
+      border: '2px solid rgba(255,68,68,0.3)',
+      boxShadow: '0 4px 24px rgba(255,68,68,0.15)',
+      animation: 'offerPulse 2s ease-in-out infinite',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+        <Flame size={14} color="#ff4444" />
+        <span style={{ fontSize: 11, fontWeight: 900, color: '#ff6b6b', textTransform: 'uppercase', letterSpacing: 1.2, fontFamily: 'Nunito, sans-serif' }}>
+          🔥 Today's Offer — Ends Tomorrow 10 PM
+        </span>
+      </div>
+      <div style={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
+        {[{ v: pad(hrs), l: 'HRS' }, { v: pad(mins), l: 'MIN' }, { v: pad(secs), l: 'SEC' }].map((t, i) => (
+          <div key={i} style={{ textAlign: 'center' }}>
+            <div style={{
+              background: 'linear-gradient(180deg, #ff4444, #cc0000)',
+              color: 'white', fontFamily: 'Boogaloo, cursive',
+              fontSize: 22, width: 44, height: 42, lineHeight: '42px',
+              borderRadius: 10, boxShadow: '0 4px 0 #990000, inset 0 1px 0 rgba(255,255,255,0.2)',
+            }}>{t.v}</div>
+            <div style={{ fontSize: 8, fontWeight: 900, color: 'rgba(255,255,255,0.4)', marginTop: 3, letterSpacing: 1 }}>{t.l}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -129,6 +199,8 @@ export default function PurchasePage() {
         @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
         .fade-up { animation: fadeUp 0.75s cubic-bezier(0.22,1,0.36,1) both; }
         .d1{animation-delay:0.08s;} .d2{animation-delay:0.18s;} .d3{animation-delay:0.28s;} .d4{animation-delay:0.38s;} .d5{animation-delay:0.5s;}
+
+        @keyframes offerPulse { 0%,100%{box-shadow:0 4px 24px rgba(255,68,68,0.15);} 50%{box-shadow:0 4px 32px rgba(255,68,68,0.35);} }
 
         @keyframes spinSlow { to { transform: rotate(360deg); } }
         .spin-slow { animation: spinSlow 22s linear infinite; }
@@ -395,8 +467,19 @@ export default function PurchasePage() {
                 <span style={{ color: "var(--green-dark)" }}>Safari Card Pack</span>
               </div>
 
-              <div className="badge fade-up" style={{ background: "var(--teal)", marginBottom: 16 }}>
+              <div className="badge fade-up" style={{ background: "var(--teal)", marginBottom: 10 }}>
                 ✦ In Stock — Ships Across India
+              </div>
+              <div className="fade-up" style={{ marginBottom: 16 }}>
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 7,
+                  background: 'linear-gradient(135deg, #ff4444, #ff6b35)',
+                  padding: '7px 16px', borderRadius: 999, fontSize: 12,
+                  fontWeight: 900, color: 'white', fontFamily: 'var(--font-body)',
+                  letterSpacing: 0.5, animation: 'offerPulse 2s ease-in-out infinite',
+                }}>
+                  🔥 TODAY'S OFFER — 50% OFF
+                </div>
               </div>
 
               <h1 className="display fade-up d1" style={{ fontSize: isMobile ? 42 : 54, color: "var(--green-dark)", lineHeight: 1.03, marginBottom: 14 }}>
@@ -428,19 +511,20 @@ export default function PurchasePage() {
               }}>
                 <div style={{ display: "flex", alignItems: "flex-end", gap: 16, marginBottom: 6 }}>
                   <div className="display" style={{ fontSize: isMobile ? 54 : 64, color: "var(--orange)", lineHeight: 1 }}>
-                    ₹499
+                    ₹349
                   </div>
                   <div style={{ paddingBottom: 8 }}>
                     <div style={{ fontSize: 14, color: "#bbb", textDecoration: "line-through", fontWeight: 700 }}>₹699</div>
                     <div style={{
-                      fontSize: 12, background: "var(--yellow)", color: "var(--green-dark)",
-                      borderRadius: 8, padding: "2px 9px", fontWeight: 900, display: "inline-block",
-                    }}>30% OFF</div>
+                      fontSize: 12, background: "linear-gradient(135deg, #ff4444, #ff6b35)", color: "white",
+                      borderRadius: 8, padding: "3px 10px", fontWeight: 900, display: "inline-block",
+                    }}>50% OFF 🔥</div>
                   </div>
                 </div>
-                <div style={{ fontSize: 13, color: "#888", fontWeight: 700 }}>
+                <div style={{ fontSize: 13, color: "#888", fontWeight: 700, marginBottom: 12 }}>
                   Free shipping across India · No hidden charges
                 </div>
+                <CountdownBadge />
               </div>
 
               {/* Feature chips */}
@@ -484,7 +568,7 @@ export default function PurchasePage() {
                     onClick={() => { setModalOpen(true); trackClick('buy_now_hero'); }}
                     style={{ fontSize: 20, padding: "20px 28px" }}
                   >
-                    🦁 Buy Now — ₹499
+                    🦁 Buy Now — ₹349
                   </button>
                 </div>
 
@@ -769,8 +853,15 @@ export default function PurchasePage() {
 
             <div style={{ position: "relative", zIndex: 1, textAlign: isMobile ? "center" : "right", flexShrink: 0 }}>
               <div style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textDecoration: "line-through", fontWeight: 700, marginBottom: 2 }}>₹799</div>
-                <div className="display" style={{ fontSize: isMobile ? 56 : 68, color: "var(--yellow)", lineHeight: 1 }}>₹499</div>
+                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textDecoration: "line-through", fontWeight: 700, marginBottom: 2 }}>₹699</div>
+                <div className="display" style={{ fontSize: isMobile ? 56 : 68, color: "var(--yellow)", lineHeight: 1 }}>₹349</div>
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6,
+                  background: 'linear-gradient(135deg, #ff4444, #ff6b35)',
+                  padding: '5px 12px', borderRadius: 99, fontSize: 11,
+                  fontWeight: 900, color: 'white', marginTop: 6,
+                  fontFamily: 'Nunito, sans-serif',
+                }}>50% OFF · Offer Ends Soon 🔥</div>
               </div>
               <a href="#hero">
                 <button className="buy-btn"
@@ -824,12 +915,15 @@ export default function PurchasePage() {
         {/* ===== STICKY MOBILE BUY BAR ===== */}
         <div className="sticky-bar">
           <div style={{ flexShrink: 0 }}>
-            <div style={{ fontSize: 10, color: "#bbb", textDecoration: "line-through", fontWeight: 700 }}>₹799</div>
-            <div className="display" style={{ fontSize: 26, color: "var(--orange)", lineHeight: 1 }}>₹499</div>
+            <div style={{ fontSize: 10, color: "#bbb", textDecoration: "line-through", fontWeight: 700 }}>₹699</div>
+            <div className="display" style={{ fontSize: 26, color: "var(--orange)", lineHeight: 1 }}>₹349</div>
           </div>
-          <button className="buy-btn" onClick={() => setModalOpen(true)} style={{ flex: 1, fontSize: 16, padding: "13px 18px", borderRadius: 16 }}>Buy Now
-            <Zap size={27} fill="white" />
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', flex: 1, gap: 4 }}>
+            <button className="buy-btn" onClick={() => setModalOpen(true)} style={{ flex: 1, fontSize: 16, padding: "13px 18px", borderRadius: 16 }}>Buy Now
+              <Zap size={27} fill="white" />
+            </button>
+            <CountdownBadge compact />
+          </div>
         </div>
         <PurchaseModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
         <DownloadModal isOpen={downloadModalOpen} onClose={() => setDownloadModalOpen(false)} />

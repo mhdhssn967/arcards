@@ -143,6 +143,10 @@ export default function HomePage() {
         @keyframes scrollHint { 0%,100% { transform: translateY(0); opacity:1; } 50% { transform: translateY(10px); opacity:0.4; } }
         .scroll-hint { animation: scrollHint 2s ease infinite; }
 
+        @keyframes cardFloat1 { 0%,100%{transform:rotate(-12deg) translateY(8px);} 50%{transform:rotate(-12deg) translateY(-4px);} }
+        @keyframes cardFloat2 { 0%,100%{transform:rotate(-1deg) translateY(0);} 50%{transform:rotate(-1deg) translateY(-10px);} }
+        @keyframes cardFloat3 { 0%,100%{transform:rotate(10deg) translateY(8px);} 50%{transform:rotate(10deg) translateY(-4px);} }
+
         .badge {
           display: inline-flex; align-items: center; gap: 6px;
           background: var(--orange); color: white;
@@ -419,6 +423,77 @@ export default function HomePage() {
                 <span style={{ fontSize: isMobile ? "0.78em" : "0.72em", color: "var(--green-mid)" }}>In Your Living Room</span>
               </h1>
 
+              {/* Mobile Card Fan Visual */}
+              {isMobile && (
+                <div className="fade-up delay-1" style={{
+                  position: 'relative', height: 220, marginBottom: 24, marginTop: 8,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                  {/* Glow blob */}
+                  <div style={{
+                    position: 'absolute', width: '80%', height: '80%',
+                    background: 'radial-gradient(ellipse, rgba(255,107,53,0.15) 0%, rgba(82,183,136,0.10) 50%, transparent 75%)',
+                    filter: 'blur(20px)', borderRadius: '50%',
+                  }} />
+
+                  {/* Card 1 - Left */}
+                  <div style={{
+                    position: 'absolute', left: '8%',
+                    width: '38%', borderRadius: 14,
+                    boxShadow: '0 16px 40px rgba(0,0,0,0.18)',
+                    transform: 'rotate(-12deg) translateY(8px)',
+                    animation: 'cardFloat1 4s ease-in-out infinite',
+                    overflow: 'hidden', zIndex: 1,
+                  }}>
+                    <img src="/1.jpg" alt="AR Card Tiger" style={{ width: '100%', display: 'block' }} />
+                  </div>
+
+                  {/* Card 2 - Center (front) */}
+                  <div style={{
+                    position: 'relative', zIndex: 3,
+                    width: '42%', borderRadius: 14,
+                    boxShadow: '0 20px 50px rgba(0,0,0,0.22), 0 0 0 3px rgba(255,107,53,0.15)',
+                    transform: 'rotate(-1deg)',
+                    animation: 'cardFloat2 4s ease-in-out infinite 0.5s',
+                    overflow: 'hidden',
+                  }}>
+                    <img src="/3.jpg" alt="AR Card Lion" style={{ width: '100%', display: 'block' }} />
+                    {/* Sticker */}
+                    <div style={{
+                      position: 'absolute', bottom: -6, right: -4,
+                      background: 'var(--yellow)', color: 'var(--green-dark)',
+                      padding: '5px 12px', borderRadius: 999, fontSize: 11, fontWeight: 900,
+                      fontFamily: 'var(--font-display)',
+                      boxShadow: '2px 2px 0 rgba(0,0,0,0.12)',
+                      transform: 'rotate(5deg)',
+                    }}>30 Cards! ✦</div>
+                  </div>
+
+                  {/* Card 3 - Right */}
+                  <div style={{
+                    position: 'absolute', right: '8%',
+                    width: '38%', borderRadius: 14,
+                    boxShadow: '0 16px 40px rgba(0,0,0,0.18)',
+                    transform: 'rotate(10deg) translateY(8px)',
+                    animation: 'cardFloat3 4s ease-in-out infinite 1s',
+                    overflow: 'hidden', zIndex: 2,
+                  }}>
+                    <img src="/5.jpg" alt="AR Card Deer" style={{ width: '100%', display: 'block' }} />
+                  </div>
+
+                  {/* Floating scan badge */}
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 5,
+                    background: 'var(--green-dark)', borderRadius: 12, padding: '8px 14px',
+                    display: 'flex', alignItems: 'center', gap: 7,
+                    boxShadow: '0 8px 24px rgba(0,0,0,0.22)',
+                  }}>
+                    <ScanLine size={13} color="var(--teal)" />
+                    <span style={{ fontSize: 10, fontWeight: 900, color: 'white', letterSpacing: 0.5 }}>Scan & Play AR</span>
+                  </div>
+                </div>
+              )}
+
               <p className="fade-up delay-2" style={{ fontSize: isMobile ? 15 : 18, lineHeight: 1.7, color: "#555", maxWidth: 460, marginBottom: 32 }}>
                 Transform your floor into a safari. Oqulix uses cutting-edge AR to bring 3D animals to life with just a simple card scan.
               </p>
@@ -480,7 +555,7 @@ export default function HomePage() {
                   onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(3px)'; e.currentTarget.style.boxShadow = '0 4px 0 #5c3d8f, 0 8px 20px rgba(132,94,194,0.25)'; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 7px 0 #5c3d8f, 0 12px 32px rgba(132,94,194,0.35)'; }}
                 >
-                  <StoreIcon size={20} /> 🦁 Buy Cards — ₹499
+                  <StoreIcon size={20} /> 🦁 Buy Cards
                 </Link>
               </div>
 
@@ -789,7 +864,7 @@ export default function HomePage() {
         </section>
 
         {/* ===== FOOTER ===== */}
-        <footer style={{ padding: isMobile ? "36px 5%" : "44px 5%", borderTop: "2px solid rgba(0,0,0,0.06)" }}>
+        <footer style={{ padding: isMobile ? "36px 5% 80px" : "44px 5%", borderTop: "2px solid rgba(0,0,0,0.06)" }}>
           <div className="footer-inner">
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -812,6 +887,25 @@ export default function HomePage() {
             </div>
           </div>
         </footer>
+
+        {/* ===== STICKY BOTTOM BUY BAR ===== */}
+        <div style={{
+          position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 90,
+          background: 'white', borderTop: '3px solid rgba(0,0,0,0.08)',
+          padding: '12px 18px',
+          boxShadow: '0 -8px 32px rgba(0,0,0,0.12)',
+        }}>
+          <Link to="/purchase" onClick={() => trackClick('buy_now_sticky_home')} style={{
+            width: '100%', background: 'var(--orange)', color: 'white', border: 'none',
+            fontWeight: 900, fontFamily: "'Nunito', sans-serif",
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+            boxShadow: '0 5px 0 #c43e0f', borderRadius: 16,
+            fontSize: 16, padding: '14px 18px', textDecoration: 'none',
+            transition: 'transform 0.15s, box-shadow 0.15s',
+          }}>
+            <Zap size={18} fill="white" /> Buy Now
+          </Link>
+        </div>
 
         <DownloadModal isOpen={downloadModalOpen} onClose={() => setDownloadModalOpen(false)} />
       </div>

@@ -167,7 +167,7 @@ function OrderCard({ order, onConfirm, onDeliver }) {
         </div>
 
         {/* Price */}
-        <div style={{ fontFamily:"Boogaloo,cursive", fontSize:22, color:"#FF6B35", flexShrink:0 }}>₹499</div>
+        <div style={{ fontFamily:"Boogaloo,cursive", fontSize:22, color:"#FF6B35", flexShrink:0 }}>₹349</div>
 
         {/* Date */}
         {createdAt && (
